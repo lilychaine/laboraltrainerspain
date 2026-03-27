@@ -1,12 +1,8 @@
 import json
-import json
 import os
 import random
 import streamlit as st
 
-# ------------------------------------------------------------
-# CONFIG
-# ------------------------------------------------------------
 CANDIDATE_FILES = [
     "simulador_base_limpio.json",
     "simulador_base.json"
@@ -29,26 +25,22 @@ def load_json_file(path):
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        if isinstance(data, list):
-            return data
-        return []
+        return data if isinstance(data, list) else []
     except Exception:
         return []
 
 @st.cache_data
 def load_questions():
     candidates = []
-
     for path in CANDIDATE_FILES:
         data = load_json_file(path)
         candidates.append((path, data, len(data)))
 
-    # elegir el archivo con más registros
     candidates.sort(key=lambda x: x[2], reverse=True)
     best_path, best_data, best_n = candidates[0]
 
     if best_n == 0:
-        st.error("No se encontró ningún banco de preguntas válido. Sube simulador_base.json o simulador_base_limpio.json.")
+        st.error("No se encontró ningún banco válido. Sube simulador_base.json o simulador_base_limpio.json.")
         st.stop()
 
     required_keys = {
@@ -59,12 +51,10 @@ def load_questions():
     }
 
     cleaned = []
-    for i, row in enumerate(best_data, start=1):
+    for row in best_data:
         if not isinstance(row, dict):
             continue
-
-        missing = required_keys - set(row.keys())
-        if missing:
+        if required_keys - set(row.keys()):
             continue
 
         cleaned.append({
@@ -81,10 +71,10 @@ def load_questions():
             "feedback_correcto": str(row["feedback_correcto"]),
             "feedback_error": str(row["feedback_error"]),
             "referencia_legal": str(row["referencia_legal"]),
-            "texto_base": str(row["texto_base"]),
+            "texto_base": str(row["texto_base"])
         })
 
-    if len(cleaned) == 0:
+    if not cleaned:
         st.error("El archivo encontrado no tiene registros válidos.")
         st.stop()
 
@@ -96,9 +86,7 @@ def load_errors():
     try:
         with open(ERRORS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-        if isinstance(data, list):
-            return data
-        return []
+        return data if isinstance(data, list) else []
     except Exception:
         return []
 
@@ -193,7 +181,7 @@ st.markdown("""
 <style>
 .block-container {
     max-width: 1100px;
-    padding-top: 1rem;
+    padding-top: 1.25rem;
     padding-bottom: 2rem;
 }
 
@@ -203,6 +191,37 @@ st.markdown("""
     padding: 1rem 1.1rem;
     margin-bottom: 1rem;
     background: #ffffff;
+}
+
+.metric-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 0.9rem 0.8rem;
+    background: #fafafa;
+    text-align: center;
+    min-height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metric-title {
+    font-size: 0.9rem;
+    color: #475569;
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+}
+
+.metric-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.ref-box {
+    font-size: 0.92rem;
+    color: #475569;
 }
 
 .ok-box {
@@ -221,20 +240,53 @@ st.markdown("""
     margin-top: 1rem;
 }
 
-.metric-box {
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 0.8rem 1rem;
-    background: #fafafa;
-    text-align: center;
-}
-
-.ref-box {
-    font-size: 0.92rem;
-    color: #475569;
+div[data-testid="stRadio"] label {
+    align-items: flex-start !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
+# ------------------------------------------------------------
+# COMPONENTES
+# ------------------------------------------------------------
+def render_metrics(mode_text, progress_text, score_text):
+    c1, c2, c3 = st.columns(3, gap="small", vertical_alignment="top")
+    with c1:
+        st.markdown(
+            f"""
+            <div class="metric-box">
+                <div>
+                    <div class="metric-title">Modalidad</div>
+                    <div class="metric-value">{mode_text}</div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    with c2:
+        st.markdown(
+            f"""
+            <div class="metric-box">
+                <div>
+                    <div class="metric-title">Progreso</div>
+                    <div class="metric-value">{progress_text}</div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    with c3:
+        st.markdown(
+            f"""
+            <div class="metric-box">
+                <div>
+                    <div class="metric-title">Aciertos</div>
+                    <div class="metric-value">{score_text}</div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 # ------------------------------------------------------------
 # MENÚ
@@ -243,56 +295,56 @@ def render_menu():
     st.title("Simulador de práctica laboral y Seguridad Social")
     st.caption("Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo.")
 
-    c1, c2 = st.columns(2)
+    c1, c2 = st.columns(2, gap="large")
 
     with c1:
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("Modo simulacro")
-        st.write("Sesión mixta con casos aleatorios y evaluación final.")
-        if st.button("Empezar simulacro de 20 casos", use_container_width=True, key="menu_simulacro"):
-            start_mode("simulacro", questions, n_questions=20)
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+        with st.container(border=False):
+            st.markdown('<div class="card">', unsafe_allow_html=True)
+            st.subheader("Modo simulacro")
+            st.write("Sesión mixta con casos aleatorios y evaluación final.")
+            if st.button("Empezar simulacro de 20 casos", use_container_width=True, key="menu_simulacro"):
+                start_mode("simulacro", questions, n_questions=20)
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("Repaso guiado")
-        st.write("Práctica secuencial con feedback completo tras cada respuesta.")
-        if st.button("Empezar repaso guiado", use_container_width=True, key="menu_repaso"):
-            start_mode("repaso", questions, n_questions=None)
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+        with st.container(border=False):
+            st.markdown('<div class="card">', unsafe_allow_html=True)
+            st.subheader("Repaso guiado")
+            st.write("Práctica secuencial con feedback completo tras cada respuesta.")
+            if st.button("Empezar repaso guiado", use_container_width=True, key="menu_repaso"):
+                start_mode("repaso", questions, n_questions=None)
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
 
     with c2:
         errors = load_errors()
 
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("Repaso de errores")
-        st.write(f"Errores guardados: **{len(errors)}**")
+        with st.container(border=False):
+            st.markdown('<div class="card">', unsafe_allow_html=True)
+            st.subheader("Repaso de errores")
+            st.write(f"Errores guardados: **{len(errors)}**")
+            if errors:
+                if st.button("Reestudiar errores", use_container_width=True, key="menu_errores"):
+                    start_mode("errores", errors, n_questions=None)
+                    st.rerun()
+            else:
+                st.info("Todavía no hay errores guardados.")
 
-        if errors:
-            if st.button("Reestudiar errores", use_container_width=True, key="menu_errores"):
-                start_mode("errores", errors, n_questions=None)
+            if st.button("Vaciar errores guardados", use_container_width=True, key="menu_vaciar"):
+                save_errors([])
+                st.success("Errores eliminados.")
                 st.rerun()
-        else:
-            st.info("Todavía no hay errores guardados.")
+            st.markdown("</div>", unsafe_allow_html=True)
 
-        if st.button("Vaciar errores guardados", use_container_width=True, key="menu_vaciar"):
-            save_errors([])
-            st.success("Errores eliminados.")
-            st.rerun()
-
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("Banco disponible")
-        st.write(f"Archivo activo: **{active_data_file}**")
-        st.write(f"Casos cargados: **{len(questions)}**")
-
-        temas = get_topic_counts(questions)
-        for tema, n in sorted(temas.items(), key=lambda x: (-x[1], x[0])):
-            st.write(f"- {tema}: {n}")
-
-        st.markdown('</div>', unsafe_allow_html=True)
+        with st.container(border=False):
+            st.markdown('<div class="card">', unsafe_allow_html=True)
+            st.subheader("Banco disponible")
+            st.write(f"Archivo activo: **{active_data_file}**")
+            st.write(f"Casos cargados: **{len(questions)}**")
+            temas = get_topic_counts(questions)
+            for tema, n in sorted(temas.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n}")
+            st.markdown("</div>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------
 # PREGUNTAS
@@ -315,13 +367,13 @@ def render_question():
     total = len(st.session_state.session_questions)
     current_num = st.session_state.current_index + 1
 
-    top1, top2, top3 = st.columns(3)
-    with top1:
-        st.markdown(f'<div class="metric-box"><b>Modo</b><br>{st.session_state.mode.title()}</div>', unsafe_allow_html=True)
-    with top2:
-        st.markdown(f'<div class="metric-box"><b>Progreso</b><br>{current_num} / {total}</div>', unsafe_allow_html=True)
-    with top3:
-        st.markdown(f'<div class="metric-box"><b>Aciertos</b><br>{st.session_state.score}</div>', unsafe_allow_html=True)
+    render_metrics(
+        st.session_state.mode.title(),
+        f"{current_num} / {total}",
+        str(st.session_state.score)
+    )
+
+    st.write("")
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(f"**Materia:** {q['materia']}")
@@ -332,7 +384,7 @@ def render_question():
     st.write(q["situacion"])
     st.markdown("**Pregunta**")
     st.write(q["pregunta"])
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     if not st.session_state.show_feedback:
         selected = st.radio(
@@ -342,8 +394,7 @@ def render_question():
             key=f"radio_{q['id']}"
         )
 
-        c1, c2 = st.columns(2)
-
+        c1, c2 = st.columns(2, gap="small")
         with c1:
             if st.button("Responder", use_container_width=True, key=f"reply_{q['id']}"):
                 st.session_state.selected_option = selected
@@ -389,19 +440,16 @@ def render_question():
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown("**Base normativa y texto de apoyo**")
         st.write(q["texto_base"])
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        c1, c2 = st.columns(2)
-
+        c1, c2 = st.columns(2, gap="small")
         with c1:
             if st.button("Continuar", use_container_width=True, key=f"next_{q['id']}"):
                 st.session_state.current_index += 1
                 st.session_state.show_feedback = False
                 st.session_state.selected_option = None
-
                 if st.session_state.current_index >= len(st.session_state.session_questions):
                     st.session_state.finished = True
-
                 st.rerun()
 
         with c2:
@@ -419,19 +467,14 @@ def render_final():
     pct = round((score / total) * 100) if total > 0 else 0
 
     st.title("Resultado final")
+    render_metrics("Final", f"{score} / {total}", f"{pct}%")
 
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown(f'<div class="metric-box"><b>Aciertos</b><br>{score}</div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown(f'<div class="metric-box"><b>Errores</b><br>{errors}</div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown(f'<div class="metric-box"><b>Rendimiento</b><br>{pct}%</div>', unsafe_allow_html=True)
+    st.write("")
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.subheader("Interpretación")
     st.write(get_performance_message(pct))
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     fallados = {}
     for r in st.session_state.session_results:
@@ -446,10 +489,9 @@ def render_final():
             st.write(f"- {tema}: {n} error(es)")
     else:
         st.write("No hubo errores en esta sesión.")
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    c1, c2 = st.columns(2)
-
+    c1, c2 = st.columns(2, gap="small")
     with c1:
         if st.button("Repetir", use_container_width=True, key="repeat_mode"):
             if st.session_state.mode == "simulacro":
