@@ -1,9 +1,16 @@
 import json
+import json
 import os
 import random
 import streamlit as st
 
-DATA_FILE = "simulador_base_limpio.json"
+# ------------------------------------------------------------
+# CONFIG
+# ------------------------------------------------------------
+CANDIDATE_FILES = [
+    "simulador_base_limpio.json",
+    "simulador_base.json"
+]
 ERRORS_FILE = "errores_simulador.json"
 
 st.set_page_config(
@@ -16,21 +23,32 @@ st.set_page_config(
 # ------------------------------------------------------------
 # CARGA
 # ------------------------------------------------------------
+def load_json_file(path):
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return data
+        return []
+    except Exception:
+        return []
+
 @st.cache_data
 def load_questions():
-    if not os.path.exists(DATA_FILE):
-        st.error(f"No existe el archivo requerido: {DATA_FILE}")
-        st.stop()
+    candidates = []
 
-    try:
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except Exception as e:
-        st.error(f"No se pudo leer {DATA_FILE}: {e}")
-        st.stop()
+    for path in CANDIDATE_FILES:
+        data = load_json_file(path)
+        candidates.append((path, data, len(data)))
 
-    if not isinstance(data, list) or len(data) == 0:
-        st.error("El archivo JSON está vacío o no tiene el formato esperado.")
+    # elegir el archivo con más registros
+    candidates.sort(key=lambda x: x[2], reverse=True)
+    best_path, best_data, best_n = candidates[0]
+
+    if best_n == 0:
+        st.error("No se encontró ningún banco de preguntas válido. Sube simulador_base.json o simulador_base_limpio.json.")
         st.stop()
 
     required_keys = {
@@ -41,15 +59,13 @@ def load_questions():
     }
 
     cleaned = []
-    for i, row in enumerate(data, start=1):
+    for i, row in enumerate(best_data, start=1):
         if not isinstance(row, dict):
-            st.error(f"El registro {i} no tiene formato de objeto.")
-            st.stop()
+            continue
 
         missing = required_keys - set(row.keys())
         if missing:
-            st.error(f"Faltan campos en el registro {i}: {', '.join(sorted(missing))}")
-            st.stop()
+            continue
 
         cleaned.append({
             "id": str(row["id"]),
@@ -68,13 +84,15 @@ def load_questions():
             "texto_base": str(row["texto_base"]),
         })
 
-    return cleaned
+    if len(cleaned) == 0:
+        st.error("El archivo encontrado no tiene registros válidos.")
+        st.stop()
 
+    return cleaned, best_path
 
 def load_errors():
     if not os.path.exists(ERRORS_FILE):
         return []
-
     try:
         with open(ERRORS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -84,7 +102,6 @@ def load_errors():
     except Exception:
         return []
 
-
 def save_errors(errors):
     try:
         with open(ERRORS_FILE, "w", encoding="utf-8") as f:
@@ -92,8 +109,7 @@ def save_errors(errors):
     except Exception:
         pass
 
-
-questions = load_questions()
+questions, active_data_file = load_questions()
 
 # ------------------------------------------------------------
 # HELPERS
@@ -106,17 +122,6 @@ def build_option_map(q):
         "D": q["opcion_d"]
     }
 
-
-def get_performance_message(pct):
-    if pct >= 90:
-        return "Nivel muy sólido. Tu criterio operativo está bien orientado a un entorno real de gestión laboral."
-    if pct >= 75:
-        return "Buen nivel. Hay una base práctica clara, aunque conviene reforzar precisión en algunos trámites."
-    if pct >= 60:
-        return "Nivel intermedio. Ya identificas parte de la lógica operativa, pero todavía hay áreas de mejora relevantes."
-    return "Conviene reforzar la base, especialmente en altas, bajas, cotización y recaudación."
-
-
 def unique_by_id(items):
     seen = set()
     out = []
@@ -127,6 +132,21 @@ def unique_by_id(items):
             out.append(item)
     return out
 
+def get_performance_message(pct):
+    if pct >= 90:
+        return "Nivel muy sólido. Tu criterio operativo está bien orientado a un entorno real de gestión laboral."
+    if pct >= 75:
+        return "Buen nivel. Hay una base práctica clara, aunque conviene reforzar precisión en algunos trámites."
+    if pct >= 60:
+        return "Nivel intermedio. Ya identificas parte de la lógica operativa, pero todavía hay áreas de mejora relevantes."
+    return "Conviene reforzar la base, especialmente en altas, bajas, cotización y recaudación."
+
+def get_topic_counts(items):
+    counts = {}
+    for item in items:
+        tema = str(item.get("tema", "Sin tema"))
+        counts[tema] = counts.get(tema, 0) + 1
+    return counts
 
 def start_mode(mode_name, source_questions, n_questions=None):
     session_questions = unique_by_id(source_questions.copy())
@@ -144,7 +164,6 @@ def start_mode(mode_name, source_questions, n_questions=None):
     st.session_state.finished = False
     st.session_state.session_results = []
 
-
 def reset_to_menu():
     st.session_state.mode = "menu"
     st.session_state.session_questions = []
@@ -155,11 +174,9 @@ def reset_to_menu():
     st.session_state.finished = False
     st.session_state.session_results = []
 
-
 def init_state():
     if "mode" not in st.session_state:
         reset_to_menu()
-
 
 def store_error_question(q):
     errors = load_errors()
@@ -167,59 +184,31 @@ def store_error_question(q):
         errors.append(q)
         save_errors(errors)
 
-
-def get_topic_counts(items):
-    counts = {}
-    for item in items:
-        tema = str(item.get("tema", "Sin tema"))
-        counts[tema] = counts.get(tema, 0) + 1
-    return counts
-
-
-def safe_rerun():
-    st.rerun()
-
-
 init_state()
 
 # ------------------------------------------------------------
-# ESTILOS
+# ESTILOS ESTABLES
 # ------------------------------------------------------------
 st.markdown("""
 <style>
 .block-container {
-    padding-top: 0.55rem;
-    padding-bottom: 1.20rem;
     max-width: 1100px;
-}
-
-h1, h2, h3 {
-    margin-top: 0rem !important;
-    padding-top: 0rem !important;
-}
-
-div[data-testid="stVerticalBlock"] > div:first-child {
-    padding-top: 0rem !important;
-    margin-top: 0rem !important;
-}
-
-div[data-testid="stAppViewContainer"] {
-    background-color: #f8fafc;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 
 .card {
     border: 1px solid #e5e7eb;
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 1rem 1.1rem;
     margin-bottom: 1rem;
     background: #ffffff;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
 .ok-box {
     border: 1px solid #bbf7d0;
     background: #f0fdf4;
-    border-radius: 14px;
+    border-radius: 12px;
     padding: 1rem;
     margin-top: 1rem;
 }
@@ -227,53 +216,22 @@ div[data-testid="stAppViewContainer"] {
 .bad-box {
     border: 1px solid #fecaca;
     background: #fef2f2;
-    border-radius: 14px;
+    border-radius: 12px;
     padding: 1rem;
     margin-top: 1rem;
 }
 
 .metric-box {
     border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 0.80rem 1rem;
-    background: #ffffff;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    background: #fafafa;
     text-align: center;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-}
-
-.muted {
-    color: #64748b;
-    font-size: 0.95rem;
-}
-
-.small-gap {
-    height: 0.20rem;
-}
-
-.section-title {
-    font-size: 1.02rem;
-    font-weight: 600;
-    margin-bottom: 0.35rem;
 }
 
 .ref-box {
     font-size: 0.92rem;
     color: #475569;
-}
-
-[data-testid="stRadio"] label {
-    align-items: flex-start !important;
-}
-
-.stButton > button {
-    border-radius: 12px !important;
-    min-height: 2.8rem !important;
-    font-weight: 600 !important;
-}
-
-hr {
-    margin-top: 0.7rem !important;
-    margin-bottom: 0.8rem !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -282,11 +240,8 @@ hr {
 # MENÚ
 # ------------------------------------------------------------
 def render_menu():
-    st.markdown("<div style='margin-top:-0.6rem'></div>", unsafe_allow_html=True)
     st.title("Simulador de práctica laboral y Seguridad Social")
-    st.caption(
-        "Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo."
-    )
+    st.caption("Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo.")
 
     c1, c2 = st.columns(2)
 
@@ -296,7 +251,7 @@ def render_menu():
         st.write("Sesión mixta con casos aleatorios y evaluación final.")
         if st.button("Empezar simulacro de 20 casos", use_container_width=True, key="menu_simulacro"):
             start_mode("simulacro", questions, n_questions=20)
-            safe_rerun()
+            st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown('<div class="card">', unsafe_allow_html=True)
@@ -304,7 +259,7 @@ def render_menu():
         st.write("Práctica secuencial con feedback completo tras cada respuesta.")
         if st.button("Empezar repaso guiado", use_container_width=True, key="menu_repaso"):
             start_mode("repaso", questions, n_questions=None)
-            safe_rerun()
+            st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
 
     with c2:
@@ -317,19 +272,20 @@ def render_menu():
         if errors:
             if st.button("Reestudiar errores", use_container_width=True, key="menu_errores"):
                 start_mode("errores", errors, n_questions=None)
-                safe_rerun()
+                st.rerun()
         else:
             st.info("Todavía no hay errores guardados.")
 
         if st.button("Vaciar errores guardados", use_container_width=True, key="menu_vaciar"):
             save_errors([])
             st.success("Errores eliminados.")
-            safe_rerun()
+            st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.subheader("Banco disponible")
+        st.write(f"Archivo activo: **{active_data_file}**")
         st.write(f"Casos cargados: **{len(questions)}**")
 
         temas = get_topic_counts(questions)
@@ -339,19 +295,19 @@ def render_menu():
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ------------------------------------------------------------
-# MOTOR DE PREGUNTAS
+# PREGUNTAS
 # ------------------------------------------------------------
 def render_question():
     if not st.session_state.session_questions:
         st.warning("No hay casos disponibles para este modo.")
-        if st.button("Volver al menú", use_container_width=True, key="no_cases_back"):
+        if st.button("Volver al menú", use_container_width=True):
             reset_to_menu()
-            safe_rerun()
+            st.rerun()
         return
 
     if st.session_state.current_index >= len(st.session_state.session_questions):
         st.session_state.finished = True
-        safe_rerun()
+        st.rerun()
         return
 
     q = st.session_state.session_questions[st.session_state.current_index]
@@ -359,33 +315,22 @@ def render_question():
     total = len(st.session_state.session_questions)
     current_num = st.session_state.current_index + 1
 
-    top1, top2, top3 = st.columns([1, 1, 1])
+    top1, top2, top3 = st.columns(3)
     with top1:
-        st.markdown(
-            f'<div class="metric-box"><b>Modo</b><br>{st.session_state.mode.title()}</div>',
-            unsafe_allow_html=True
-        )
+        st.markdown(f'<div class="metric-box"><b>Modo</b><br>{st.session_state.mode.title()}</div>', unsafe_allow_html=True)
     with top2:
-        st.markdown(
-            f'<div class="metric-box"><b>Progreso</b><br>{current_num} / {total}</div>',
-            unsafe_allow_html=True
-        )
+        st.markdown(f'<div class="metric-box"><b>Progreso</b><br>{current_num} / {total}</div>', unsafe_allow_html=True)
     with top3:
-        st.markdown(
-            f'<div class="metric-box"><b>Aciertos</b><br>{st.session_state.score}</div>',
-            unsafe_allow_html=True
-        )
-
-    st.markdown('<div class="small-gap"></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-box"><b>Aciertos</b><br>{st.session_state.score}</div>', unsafe_allow_html=True)
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown(f"**Materia:** {q['materia']}")
     st.markdown(f"**Tema:** {q['tema']}")
     st.markdown(f'<div class="ref-box"><b>Referencia base:</b> {q["referencia_legal"]}</div>', unsafe_allow_html=True)
     st.markdown("---")
-    st.markdown('<div class="section-title">Situación práctica</div>', unsafe_allow_html=True)
+    st.markdown("**Situación práctica**")
     st.write(q["situacion"])
-    st.markdown('<div class="section-title">Pregunta</div>', unsafe_allow_html=True)
+    st.markdown("**Pregunta**")
     st.write(q["pregunta"])
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -397,7 +342,7 @@ def render_question():
             key=f"radio_{q['id']}"
         )
 
-        c1, c2 = st.columns([1, 1])
+        c1, c2 = st.columns(2)
 
         with c1:
             if st.button("Responder", use_container_width=True, key=f"reply_{q['id']}"):
@@ -415,12 +360,12 @@ def render_question():
                     "tema": q["tema"],
                     "correcta": is_correct
                 })
-                safe_rerun()
+                st.rerun()
 
         with c2:
             if st.button("Volver al menú", use_container_width=True, key=f"back_{q['id']}"):
                 reset_to_menu()
-                safe_rerun()
+                st.rerun()
 
     else:
         selected = st.session_state.selected_option
@@ -442,11 +387,11 @@ def render_question():
             st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.markdown('<div class="section-title">Base normativa y texto de apoyo</div>', unsafe_allow_html=True)
+        st.markdown("**Base normativa y texto de apoyo**")
         st.write(q["texto_base"])
         st.markdown('</div>', unsafe_allow_html=True)
 
-        c1, c2 = st.columns([1, 1])
+        c1, c2 = st.columns(2)
 
         with c1:
             if st.button("Continuar", use_container_width=True, key=f"next_{q['id']}"):
@@ -457,15 +402,15 @@ def render_question():
                 if st.session_state.current_index >= len(st.session_state.session_questions):
                     st.session_state.finished = True
 
-                safe_rerun()
+                st.rerun()
 
         with c2:
             if st.button("Volver al menú", use_container_width=True, key=f"menu_after_{q['id']}"):
                 reset_to_menu()
-                safe_rerun()
+                st.rerun()
 
 # ------------------------------------------------------------
-# PANTALLA FINAL
+# FINAL
 # ------------------------------------------------------------
 def render_final():
     total = len(st.session_state.session_questions)
@@ -477,20 +422,11 @@ def render_final():
 
     c1, c2, c3 = st.columns(3)
     with c1:
-        st.markdown(
-            f'<div class="metric-box"><b>Aciertos</b><br>{score}</div>',
-            unsafe_allow_html=True
-        )
+        st.markdown(f'<div class="metric-box"><b>Aciertos</b><br>{score}</div>', unsafe_allow_html=True)
     with c2:
-        st.markdown(
-            f'<div class="metric-box"><b>Errores</b><br>{errors}</div>',
-            unsafe_allow_html=True
-        )
+        st.markdown(f'<div class="metric-box"><b>Errores</b><br>{errors}</div>', unsafe_allow_html=True)
     with c3:
-        st.markdown(
-            f'<div class="metric-box"><b>Rendimiento</b><br>{pct}%</div>',
-            unsafe_allow_html=True
-        )
+        st.markdown(f'<div class="metric-box"><b>Rendimiento</b><br>{pct}%</div>', unsafe_allow_html=True)
 
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.subheader("Interpretación")
@@ -526,15 +462,15 @@ def render_final():
                     start_mode("errores", errors_list, n_questions=None)
                 else:
                     reset_to_menu()
-            safe_rerun()
+            st.rerun()
 
     with c2:
         if st.button("Volver al menú principal", use_container_width=True, key="final_menu"):
             reset_to_menu()
-            safe_rerun()
+            st.rerun()
 
 # ------------------------------------------------------------
-# RENDER PRINCIPAL
+# RENDER
 # ------------------------------------------------------------
 if st.session_state.mode == "menu":
     render_menu()
