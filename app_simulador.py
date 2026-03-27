@@ -9,8 +9,8 @@ import streamlit as st
 # Usa: salida_laboral/simulador_base.json
 # ============================================================
 
-DATA_FILE = os.path.join("salida_laboral", "simulador_base.json")
-ERRORS_FILE = os.path.join("salida_laboral", "errores_simulador.json")
+DATA_FILE = os.path.join("simulador_base.json")
+ERRORS_FILE = os.path.join("errores_simulador.json")
 
 st.set_page_config(
     page_title="Simulador de práctica laboral",
