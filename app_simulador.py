@@ -3,8 +3,8 @@ import os
 import random
 import streamlit as st
 
-DATA_FILE = "simulador_base.json"
-ERRORS_FILE = "errores_simulador.json"
+DATA_FILE = "simulador_base_limpio.json"
+ERRORS_FILE = "errores_simulador_base_limpio.json"
 
 st.set_page_config(
     page_title="Simulador de práctica laboral",
