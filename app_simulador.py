@@ -40,7 +40,7 @@ def load_json_file(path):
         return []
 
 
-@st.cache_data
+
 def load_questions():
     candidates = []
     for path in CANDIDATE_FILES:
