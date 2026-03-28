@@ -5,16 +5,13 @@ import streamlit as st
 
 # ============================================================
 # SIMULADOR DE PRÁCTICA LABORAL Y SEGURIDAD SOCIAL
-# - mantiene el dashboard principal amigable
-# - métricas nativas de Streamlit
+# - mantiene el dashboard principal
+# - corrige el corte de cards al empezar el simulador
 # - sin normativa al inicio del caso
 # - tras responder solo muestra:
-#   1) Tu respuesta
-#   2) Respuesta correcta
-#   3) Explicación legal
-#   4) Referencia legal
-# - sin texto base ni desplegables
-# ============================================================
+#   1) Respuesta correcta
+#   2) Explicación legal
+#   ============================================================
 
 CANDIDATE_FILES = [
     "simulador_base_final.json",
@@ -317,6 +314,7 @@ def render_question():
     total = len(st.session_state.session_questions)
     current_num = st.session_state.current_index + 1
 
+    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
     render_top_metrics(
         st.session_state.mode.title(),
         f"{current_num}/{total}",
@@ -324,13 +322,21 @@ def render_question():
     )
 
     st.write("")
+    st.markdown("### Caso práctico")
 
     with st.container(border=True):
         st.markdown(f"**Materia:** {q['materia']}")
         st.markdown(f"**Tema:** {q['tema']}")
-        st.divider()
+
+    st.write("")
+
+    with st.container(border=True):
         st.markdown("**Situación práctica**")
         st.write(q["situacion"])
+
+    st.write("")
+
+    with st.container(border=True):
         st.markdown("**Pregunta**")
         st.write(q["pregunta"])
 
@@ -354,7 +360,6 @@ def render_question():
 
         if submit_answer:
             st.session_state.selected_option = selected
-            st.session_state.show_feedback = True
 
             is_correct = selected == q["respuesta_correcta"]
             if is_correct:
@@ -369,6 +374,8 @@ def render_question():
                     "correcta": is_correct,
                 }
             )
+
+            st.session_state.show_feedback = True
             st.rerun()
 
     else:
