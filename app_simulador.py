@@ -5,13 +5,15 @@ import streamlit as st
 
 # ============================================================
 # SIMULADOR DE PRÁCTICA LABORAL Y SEGURIDAD SOCIAL
-# - métricas nativas (no se cortan)
-# - sin normativa en el enunciado
-# - feedback limpio:
-#     • Tu respuesta
-#     • Respuesta correcta
-#     • Explicación legal + referencia
-# - SIN texto base ni desplegables
+# - mantiene el dashboard principal amigable
+# - métricas nativas de Streamlit
+# - sin normativa al inicio del caso
+# - tras responder solo muestra:
+#   1) Tu respuesta
+#   2) Respuesta correcta
+#   3) Explicación legal
+#   4) Referencia legal
+# - sin texto base ni desplegables
 # ============================================================
 
 CANDIDATE_FILES = [
@@ -27,7 +29,7 @@ st.set_page_config(
 )
 
 # ------------------------------------------------------------
-# CARGA
+# CARGA DE DATOS
 # ------------------------------------------------------------
 def load_json_file(path):
     if not os.path.exists(path):
@@ -41,44 +43,64 @@ def load_json_file(path):
 
 
 def load_questions():
-    path = CANDIDATE_FILES[0]
-    data = load_json_file(path)
+    candidates = []
+    for path in CANDIDATE_FILES:
+        data = load_json_file(path)
+        candidates.append((path, data, len(data)))
 
-    if len(data) == 0:
-        st.error("No se encontró simulador_base_final.json o está vacío.")
+    candidates.sort(key=lambda x: x[2], reverse=True)
+    best_path, best_data, best_n = candidates[0]
+
+    if best_n == 0:
+        st.error("No se encontró ningún banco válido. Sube simulador_base_final.json.")
         st.stop()
 
     required_keys = {
-        "id", "materia", "tema", "situacion", "pregunta",
-        "opcion_a", "opcion_b", "opcion_c", "opcion_d",
-        "respuesta_correcta", "feedback_correcto", "feedback_error",
-        "referencia_legal"
+        "id",
+        "materia",
+        "tema",
+        "situacion",
+        "pregunta",
+        "opcion_a",
+        "opcion_b",
+        "opcion_c",
+        "opcion_d",
+        "respuesta_correcta",
+        "feedback_correcto",
+        "feedback_error",
+        "referencia_legal",
     }
 
     cleaned = []
-    for row in data:
+    for row in best_data:
         if not isinstance(row, dict):
             continue
         if required_keys - set(row.keys()):
             continue
 
-        cleaned.append({
-            "id": str(row["id"]),
-            "materia": str(row["materia"]),
-            "tema": str(row["tema"]),
-            "situacion": str(row["situacion"]),
-            "pregunta": str(row["pregunta"]),
-            "opcion_a": str(row["opcion_a"]),
-            "opcion_b": str(row["opcion_b"]),
-            "opcion_c": str(row["opcion_c"]),
-            "opcion_d": str(row["opcion_d"]),
-            "respuesta_correcta": str(row["respuesta_correcta"]).strip().upper(),
-            "feedback_correcto": str(row["feedback_correcto"]),
-            "feedback_error": str(row["feedback_error"]),
-            "referencia_legal": str(row.get("referencia_legal", "")),
-        })
+        cleaned.append(
+            {
+                "id": str(row["id"]),
+                "materia": str(row["materia"]),
+                "tema": str(row["tema"]),
+                "situacion": str(row["situacion"]),
+                "pregunta": str(row["pregunta"]),
+                "opcion_a": str(row["opcion_a"]),
+                "opcion_b": str(row["opcion_b"]),
+                "opcion_c": str(row["opcion_c"]),
+                "opcion_d": str(row["opcion_d"]),
+                "respuesta_correcta": str(row["respuesta_correcta"]).strip().upper(),
+                "feedback_correcto": str(row["feedback_correcto"]),
+                "feedback_error": str(row["feedback_error"]),
+                "referencia_legal": str(row.get("referencia_legal", "")),
+            }
+        )
 
-    return cleaned
+    if not cleaned:
+        st.error("El archivo encontrado no contiene registros válidos.")
+        st.stop()
+
+    return cleaned, best_path
 
 
 def load_errors():
@@ -100,7 +122,7 @@ def save_errors(errors):
         pass
 
 
-questions = load_questions()
+questions, active_data_file = load_questions()
 
 # ------------------------------------------------------------
 # HELPERS
@@ -135,12 +157,18 @@ def get_topic_counts(items):
 
 def get_performance_message(pct):
     if pct >= 90:
-        return "Nivel muy sólido. Tu criterio operativo es adecuado para un entorno real."
+        return "Nivel muy sólido. Tu criterio operativo está bien orientado a un entorno real de gestión laboral."
     if pct >= 75:
-        return "Buen nivel. Refuerza algunos detalles técnicos."
+        return "Buen nivel. Hay una base práctica clara, aunque conviene reforzar precisión en algunos trámites."
     if pct >= 60:
-        return "Nivel intermedio. Aún hay margen de mejora."
-    return "Conviene reforzar la base en gestión laboral."
+        return "Nivel intermedio. Ya identificas parte de la lógica operativa, pero todavía hay áreas de mejora relevantes."
+    return "Conviene reforzar la base, especialmente en altas, bajas, cotización y recaudación."
+
+
+def clean_feedback(text):
+    text = str(text).strip()
+    text = text.replace("Correcto.", "").replace("Incorrecto.", "").strip()
+    return text
 
 
 def store_error_question(q):
@@ -154,8 +182,8 @@ def start_mode(mode_name, source_questions, n_questions=None):
     session_questions = unique_by_id(source_questions.copy())
     random.shuffle(session_questions)
 
-    if n_questions:
-        session_questions = session_questions[:min(n_questions, len(session_questions))]
+    if n_questions is not None:
+        session_questions = session_questions[: min(n_questions, len(session_questions))]
 
     st.session_state.mode = mode_name
     st.session_state.session_questions = session_questions
@@ -178,81 +206,282 @@ def reset_to_menu():
     st.session_state.session_results = []
 
 
-if "mode" not in st.session_state:
-    reset_to_menu()
+def init_state():
+    if "mode" not in st.session_state:
+        reset_to_menu()
+
+
+init_state()
 
 # ------------------------------------------------------------
-# UI
+# ESTILO SUAVE
 # ------------------------------------------------------------
-def render_metrics(mode, progress, score):
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Modalidad", mode)
-    c2.metric("Progreso", progress)
-    c3.metric("Aciertos", score)
+st.markdown("""
+<style>
+.block-container {
+    max-width: 1100px;
+    padding-top: 1.10rem;
+    padding-bottom: 2rem;
+}
+
+div[data-testid="stRadio"] label {
+    align-items: flex-start !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------------------
+# COMPONENTES UI
+# ------------------------------------------------------------
+def render_top_metrics(mode_text, progress_text, score_value):
+    c1, c2, c3 = st.columns(3, gap="small")
+    with c1:
+        st.metric("Modalidad", mode_text, border=True)
+    with c2:
+        st.metric("Progreso", progress_text, border=True)
+    with c3:
+        st.metric("Aciertos", str(score_value), border=True)
 
 
 def render_menu():
-    st.title("Simulador de práctica laboral")
-    st.caption("Entrenamiento práctico en gestión laboral y Seguridad Social")
+    st.title("Simulador de práctica laboral y Seguridad Social")
+    st.caption(
+        "Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo."
+    )
 
-    c1, c2 = st.columns(2)
+    c1, c2 = st.columns(2, gap="large")
 
     with c1:
-        if st.button("Simulacro (20 casos)", use_container_width=True):
-            start_mode("simulacro", questions, 20)
-            st.rerun()
+        with st.container(border=True):
+            st.subheader("Modo simulacro")
+            st.write("Sesión mixta con casos aleatorios y evaluación final.")
+            if st.button("Empezar simulacro de 20 casos", width="stretch", key="menu_simulacro"):
+                start_mode("simulacro", questions, n_questions=20)
+                st.rerun()
 
-        if st.button("Repaso guiado", use_container_width=True):
-            start_mode("repaso", questions)
-            st.rerun()
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Repaso guiado")
+            st.write("Práctica secuencial con feedback completo tras cada respuesta.")
+            if st.button("Empezar repaso guiado", width="stretch", key="menu_repaso"):
+                start_mode("repaso", questions, n_questions=None)
+                st.rerun()
 
     with c2:
         errors = load_errors()
 
-        if errors:
-            if st.button("Repasar errores", use_container_width=True):
-                start_mode("errores", errors)
+        with st.container(border=True):
+            st.subheader("Repaso de errores")
+            st.write(f"Errores guardados: **{len(errors)}**")
+
+            if errors:
+                if st.button("Reestudiar errores", width="stretch", key="menu_errores"):
+                    start_mode("errores", errors, n_questions=None)
+                    st.rerun()
+            else:
+                st.info("Todavía no hay errores guardados.")
+
+            if st.button("Vaciar errores guardados", width="stretch", key="menu_vaciar"):
+                save_errors([])
+                st.success("Errores eliminados.")
                 st.rerun()
 
-        if st.button("Borrar errores", use_container_width=True):
-            save_errors([])
-            st.success("Errores eliminados")
-            st.rerun()
+        st.write("")
 
-        st.write(f"Casos disponibles: {len(questions)}")
+        with st.container(border=True):
+            st.subheader("Banco disponible")
+            st.write(f"Archivo activo: **{active_data_file}**")
+            st.write(f"Casos cargados: **{len(questions)}**")
+
+            temas = get_topic_counts(questions)
+            for tema, n in sorted(temas.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n}")
 
 
 def render_question():
+    if not st.session_state.session_questions:
+        st.warning("No hay casos disponibles para este modo.")
+        if st.button("Volver al menú", width="stretch", key="empty_back"):
+            reset_to_menu()
+            st.rerun()
+        return
+
+    if st.session_state.current_index >= len(st.session_state.session_questions):
+        st.session_state.finished = True
+        st.rerun()
+        return
+
     q = st.session_state.session_questions[st.session_state.current_index]
     option_map = build_option_map(q)
-
     total = len(st.session_state.session_questions)
-    current = st.session_state.current_index + 1
+    current_num = st.session_state.current_index + 1
 
-    render_metrics(
-        st.session_state.mode,
-        f"{current}/{total}",
-        st.session_state.score
+    render_top_metrics(
+        st.session_state.mode.title(),
+        f"{current_num}/{total}",
+        st.session_state.score,
     )
 
     st.write("")
 
-    st.subheader("Situación práctica")
-    st.write(q["situacion"])
+    with st.container(border=True):
+        st.markdown(f"**Materia:** {q['materia']}")
+        st.markdown(f"**Tema:** {q['tema']}")
+        st.divider()
+        st.markdown("**Situación práctica**")
+        st.write(q["situacion"])
+        st.markdown("**Pregunta**")
+        st.write(q["pregunta"])
 
-    st.subheader("Pregunta")
-    st.write(q["pregunta"])
+    st.write("")
 
     if not st.session_state.show_feedback:
-        selected = st.radio(
-            "Selecciona una opción:",
-            ["A", "B", "C", "D"],
-            format_func=lambda x: f"{x}. {option_map[x]}"
-        )
+        with st.form(key=f"form_{q['id']}"):
+            selected = st.radio(
+                "Selecciona la opción correcta:",
+                options=["A", "B", "C", "D"],
+                format_func=lambda x: f"{x}. {option_map[x]}",
+            )
 
-        if st.button("Responder"):
+            c1, c2 = st.columns(2, gap="small")
+            submit_answer = c1.form_submit_button("Responder", width="stretch")
+            back_menu = c2.form_submit_button("Volver al menú", width="stretch")
+
+        if back_menu:
+            reset_to_menu()
+            st.rerun()
+
+        if submit_answer:
             st.session_state.selected_option = selected
             st.session_state.show_feedback = True
+
+            is_correct = selected == q["respuesta_correcta"]
+            if is_correct:
+                st.session_state.score += 1
+            else:
+                store_error_question(q)
+
+            st.session_state.session_results.append(
+                {
+                    "id": q["id"],
+                    "tema": q["tema"],
+                    "correcta": is_correct,
+                }
+            )
+            st.rerun()
+
+    else:
+        selected = st.session_state.selected_option
+        correct = q["respuesta_correcta"]
+
+        if selected == correct:
+            st.success("Decisión adecuada")
+        else:
+            st.error("Decisión incorrecta")
+
+        with st.container(border=True):
+            st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
+            st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Explicación legal")
+            if selected == correct:
+                st.write(clean_feedback(q["feedback_correcto"]))
+            else:
+                st.write(clean_feedback(q["feedback_error"]))
+
+            if q["referencia_legal"]:
+                st.write(f"**Referencia legal:** {q['referencia_legal']}")
+
+        st.write("")
+
+        c1, c2 = st.columns(2, gap="small")
+        if c1.button("Continuar", width="stretch", key=f"next_{q['id']}"):
+            st.session_state.current_index += 1
+            st.session_state.show_feedback = False
+            st.session_state.selected_option = None
+
+            if st.session_state.current_index >= len(st.session_state.session_questions):
+                st.session_state.finished = True
+
+            st.rerun()
+
+        if c2.button("Volver al menú", width="stretch", key=f"back_after_{q['id']}"):
+            reset_to_menu()
+            st.rerun()
+
+
+def render_final():
+    total = len(st.session_state.session_questions)
+    score = st.session_state.score
+    errors = total - score
+    pct = round((score / total) * 100) if total > 0 else 0
+
+    st.title("Resultado final")
+
+    c1, c2, c3 = st.columns(3, gap="small")
+    with c1:
+        st.metric("Aciertos", score, border=True)
+    with c2:
+        st.metric("Errores", errors, border=True)
+    with c3:
+        st.metric("Rendimiento", f"{pct}%", border=True)
+
+    st.write("")
+
+    with st.container(border=True):
+        st.subheader("Interpretación")
+        st.write(get_performance_message(pct))
+
+    st.write("")
+
+    fallados = {}
+    for r in st.session_state.session_results:
+        if not r["correcta"]:
+            tema = r["tema"]
+            fallados[tema] = fallados.get(tema, 0) + 1
+
+    with st.container(border=True):
+        st.subheader("Temas a reforzar")
+        if fallados:
+            for tema, n in sorted(fallados.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n} error(es)")
+        else:
+            st.write("No hubo errores en esta sesión.")
+
+    st.write("")
+
+    c1, c2 = st.columns(2, gap="small")
+    if c1.button("Repetir", width="stretch", key="repeat_mode"):
+        if st.session_state.mode == "simulacro":
+            start_mode("simulacro", questions, n_questions=20)
+        elif st.session_state.mode == "repaso":
+            start_mode("repaso", questions, n_questions=None)
+        else:
+            errors_list = load_errors()
+            if errors_list:
+                start_mode("errores", errors_list, n_questions=None)
+            else:
+                reset_to_menu()
+        st.rerun()
+
+    if c2.button("Volver al menú principal", width="stretch", key="final_menu"):
+        reset_to_menu()
+        st.rerun()
+
+
+# ------------------------------------------------------------
+# RENDER PRINCIPAL
+# ------------------------------------------------------------
+if st.session_state.mode == "menu":
+    render_menu()
+elif st.session_state.finished:
+    render_final()
+else:
+    render_question()
 
             if selected == q["respuesta_correcta"]:
                 st.session_state.score += 1
