@@ -14,7 +14,7 @@ import streamlit as st
 # ============================================================
 
 CANDIDATE_FILES = [
-    "simulador_base_limpio.json",
+    "simulador_base_final.json",
     "simulador_base.json",
 ]
 ERRORS_FILE = "errores_simulador.json"
