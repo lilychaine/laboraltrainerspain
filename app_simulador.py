@@ -5,17 +5,17 @@ import streamlit as st
 
 # ============================================================
 # SIMULADOR DE PRÁCTICA LABORAL Y SEGURIDAD SOCIAL
-# Versión estable:
-# - métricas superiores con st.metric()
-# - sin recortes de cards
-# - sin mezclar base normativa con la pregunta
-# - la referencia legal solo aparece después de responder
-# - mantiene el banco completo: usa el archivo válido con más casos
+# - métricas nativas de Streamlit
+# - sin referencia legal al inicio del caso
+# - tras responder solo muestra:
+#   1) Tu respuesta
+#   2) Respuesta correcta
+#   3) Explicación legal y base normativa
+# - usa solo el banco final limpio
 # ============================================================
 
 CANDIDATE_FILES = [
     "simulador_base_final.json",
-    
 ]
 ERRORS_FILE = "errores_simulador.json"
 
@@ -40,7 +40,6 @@ def load_json_file(path):
         return []
 
 
-
 def load_questions():
     candidates = []
     for path in CANDIDATE_FILES:
@@ -51,7 +50,7 @@ def load_questions():
     best_path, best_data, best_n = candidates[0]
 
     if best_n == 0:
-        st.error("No se encontró ningún banco válido. Sube simulador_base_limpio.json o simulador_base.json.")
+        st.error("No se encontró ningún banco válido. Sube simulador_base_final.json.")
         st.stop()
 
     required_keys = {
@@ -188,7 +187,6 @@ def start_mode(mode_name, source_questions, n_questions=None):
     st.session_state.selected_option = None
     st.session_state.finished = False
     st.session_state.session_results = []
-    st.session_state.last_answered_id = None
 
 
 def reset_to_menu():
@@ -200,7 +198,6 @@ def reset_to_menu():
     st.session_state.selected_option = None
     st.session_state.finished = False
     st.session_state.session_results = []
-    st.session_state.last_answered_id = None
 
 
 def init_state():
@@ -211,11 +208,27 @@ def init_state():
 init_state()
 
 # ------------------------------------------------------------
+# ESTILO SUAVE
+# ------------------------------------------------------------
+st.markdown("""
+<style>
+.block-container {
+    max-width: 1100px;
+    padding-top: 1.10rem;
+    padding-bottom: 2rem;
+}
+
+div[data-testid="stRadio"] label {
+    align-items: flex-start !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------------------
 # COMPONENTES UI
 # ------------------------------------------------------------
 def render_top_metrics(mode_text, progress_text, score_value):
     c1, c2, c3 = st.columns(3, gap="small")
-
     with c1:
         st.metric("Modalidad", mode_text, border=True)
     with c2:
@@ -336,7 +349,6 @@ def render_question():
         if submit_answer:
             st.session_state.selected_option = selected
             st.session_state.show_feedback = True
-            st.session_state.last_answered_id = q["id"]
 
             is_correct = selected == q["respuesta_correcta"]
             if is_correct:
@@ -358,23 +370,29 @@ def render_question():
         correct = q["respuesta_correcta"]
 
         if selected == correct:
-            st.success("Respuesta correcta")
-            with st.container(border=True):
-                st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
-                st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
-                st.write(q["feedback_correcto"])
+            st.success("Decisión adecuada")
         else:
-            st.error("Respuesta incorrecta")
-            with st.container(border=True):
-                st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
-                st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
-                st.write(q["feedback_error"])
+            st.error("Decisión incorrecta")
+
+        with st.container(border=True):
+            st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
+            st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
 
         st.write("")
 
-        with st.expander("Ver explicación legal y base normativa", expanded=True):
-            st.write(f"**Referencia legal:** {q['referencia_legal']}")
-            st.write(q["texto_base"])
+        with st.container(border=True):
+            st.subheader("Explicación legal y base normativa")
+            if selected == correct:
+                st.write(q["feedback_correcto"])
+            else:
+                st.write(q["feedback_error"])
+
+            if q["referencia_legal"]:
+                st.write(f"**Referencia legal:** {q['referencia_legal']}")
+
+            if q["texto_base"]:
+                with st.expander("Ver texto base de apoyo", expanded=False):
+                    st.write(q["texto_base"])
 
         st.write("")
 
@@ -383,7 +401,6 @@ def render_question():
             st.session_state.current_index += 1
             st.session_state.show_feedback = False
             st.session_state.selected_option = None
-            st.session_state.last_answered_id = None
 
             if st.session_state.current_index >= len(st.session_state.session_questions):
                 st.session_state.finished = True
