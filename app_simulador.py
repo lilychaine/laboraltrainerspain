@@ -9,9 +9,11 @@ import streamlit as st
 # - corrige el corte de cards al empezar el simulador
 # - sin normativa al inicio del caso
 # - tras responder solo muestra:
-#   1) Respuesta correcta
-#   2) Explicación legal
-#   ============================================================
+#   1) Tu respuesta
+#   2) Respuesta correcta
+#   3) Explicación legal
+#   4) Referencia legal
+# ============================================================
 
 CANDIDATE_FILES = [
     "simulador_base_final.json",
