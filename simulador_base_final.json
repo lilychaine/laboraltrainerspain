@@ -1,12 +1,17 @@
-{
-  "situacion": "Formas parte del departamento laboral. Un responsable te informa de que una persona ha empezado hoy a trabajar, pero no se ha tramitado el alta en Seguridad Social.",
-  "pregunta": "¿Qué actuación deberías realizar de forma inmediata?",
-  "opcion_a": "Tramitar el alta cuanto antes, aunque sea fuera de plazo.",
-  "opcion_b": "Esperar al cierre de mes para regularizar la situación.",
-  "opcion_c": "No realizar ninguna actuación hasta revisar el contrato.",
-  "opcion_d": "Comunicar únicamente la situación al trabajador.",
-  "respuesta_correcta": "A",
-  "feedback_correcto": "La actuación correcta es tramitar el alta de forma inmediata. Aunque ya se haya iniciado la actividad, es necesario regularizar la situación cuanto antes para reducir el impacto de posibles sanciones.",
-  "feedback_error": "El error es no actuar de forma inmediata ante una falta de alta. Retrasar la regularización incrementa el riesgo de sanción y responsabilidad para la empresa.",
-  "referencia_legal": "Ley General de la Seguridad Social – obligación de alta previa al inicio de la actividad."
-}
+[
+  {
+    "id": "1",
+    "materia": "Seguridad Social",
+    "tema": "Altas",
+    "situacion": "Formas parte del departamento laboral. Un responsable te informa de que una persona ha empezado hoy a trabajar, pero no se ha tramitado el alta en Seguridad Social.",
+    "pregunta": "¿Qué actuación deberías realizar de forma inmediata?",
+    "opcion_a": "Tramitar el alta cuanto antes, aunque sea fuera de plazo.",
+    "opcion_b": "Esperar al cierre de mes para regularizar la situación.",
+    "opcion_c": "No realizar ninguna actuación hasta revisar el contrato.",
+    "opcion_d": "Comunicar únicamente la situación al trabajador.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "La actuación correcta es tramitar el alta de forma inmediata. Aunque ya se haya iniciado la actividad, es necesario regularizar la situación cuanto antes para reducir el impacto de posibles sanciones.",
+    "feedback_error": "El error es no actuar de forma inmediata ante una falta de alta. Retrasar la regularización incrementa el riesgo de sanción y responsabilidad para la empresa.",
+    "referencia_legal": "Ley General de la Seguridad Social – obligación de alta previa al inicio de la actividad."
+  }
+]
