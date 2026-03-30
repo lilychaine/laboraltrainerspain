@@ -1,473 +1,282 @@
-import json
-import os
-import random
-import streamlit as st
-
-# ============================================================
-# SIMULADOR DE PRÁCTICA LABORAL Y SEGURIDAD SOCIAL
-# - mantiene el dashboard principal
-# - elimina cards recortadas en el flujo del simulador
-# - elimina la referencia legal de la explicación
-# - no muestra normativa al inicio del caso
-# ============================================================
-
-CANDIDATE_FILES = [
-    "simulador_base_final.json",
+[
+  {
+    "id": "1",
+    "materia": "Seguridad Social",
+    "tema": "Altas y afiliación",
+    "situacion": "Una persona comienza a trabajar el lunes a las 9:00. La empresa no ha comunicado el alta en Seguridad Social el viernes anterior.",
+    "pregunta": "¿Qué decisión deberías tomar?",
+    "opcion_a": "Comunicar el alta antes del inicio de la jornada laboral.",
+    "opcion_b": "Comunicar el alta dentro de los 3 días siguientes.",
+    "opcion_c": "Esperar al cierre de mes para regularizar.",
+    "opcion_d": "No es necesario comunicar el alta si hay contrato firmado.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "El alta debe comunicarse antes del inicio de la prestación de servicios.",
+    "feedback_error": "El error es no identificar la obligación previa de alta antes de comenzar a trabajar."
+  },
+  {
+    "id": "2",
+    "materia": "Seguridad Social",
+    "tema": "Altas y afiliación",
+    "situacion": "Una persona ya afiliada cambia de empresa y empieza una nueva relación laboral.",
+    "pregunta": "¿Qué debe hacer la empresa?",
+    "opcion_a": "Solicitar un nuevo número de afiliación.",
+    "opcion_b": "Comunicar un alta en Seguridad Social.",
+    "opcion_c": "No hacer ninguna gestión.",
+    "opcion_d": "Esperar a la primera nómina.",
+    "respuesta_correcta": "B",
+    "feedback_correcto": "Debe tramitarse el alta, no una nueva afiliación.",
+    "feedback_error": "El error es confundir afiliación con alta."
+  },
+  {
+    "id": "3",
+    "materia": "Seguridad Social",
+    "tema": "Bajas y variaciones",
+    "situacion": "Una persona finaliza su contrato el viernes.",
+    "pregunta": "¿Qué debe hacer la empresa respecto a Seguridad Social?",
+    "opcion_a": "Comunicar la baja en Seguridad Social.",
+    "opcion_b": "No comunicar nada.",
+    "opcion_c": "Esperar 10 días.",
+    "opcion_d": "Solo comunicarlo al trabajador.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "La empresa debe comunicar la baja cuando cesa la relación laboral.",
+    "feedback_error": "El error es no comunicar el fin de la relación laboral."
+  },
+  {
+    "id": "4",
+    "materia": "Seguridad Social",
+    "tema": "Bajas y variaciones",
+    "situacion": "Una persona pasa de jornada completa a jornada parcial.",
+    "pregunta": "¿Qué actuación corresponde?",
+    "opcion_a": "Comunicar una variación de datos.",
+    "opcion_b": "Dar de baja y alta nuevamente.",
+    "opcion_c": "No hacer nada.",
+    "opcion_d": "Esperar al siguiente contrato.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Los cambios de jornada se comunican como variación de datos.",
+    "feedback_error": "El error es tratar la modificación como baja y alta."
+  },
+  {
+    "id": "5",
+    "materia": "Seguridad Social",
+    "tema": "Cotización",
+    "situacion": "Una empresa duda si debe cotizar por una persona que está trabajando.",
+    "pregunta": "¿Cuál es la regla general?",
+    "opcion_a": "Siempre que exista prestación de servicios hay obligación de cotizar.",
+    "opcion_b": "Solo si el contrato es indefinido.",
+    "opcion_c": "Solo si lo solicita el trabajador.",
+    "opcion_d": "No es obligatorio en todos los casos.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "La obligación de cotizar nace con la prestación de servicios.",
+    "feedback_error": "El error es pensar que depende del tipo de contrato o voluntad."
+  },
+  {
+    "id": "6",
+    "materia": "Seguridad Social",
+    "tema": "Cotización",
+    "situacion": "La empresa detecta que ha cotizado de menos por un trabajador.",
+    "pregunta": "¿Qué debe hacer?",
+    "opcion_a": "Regularizar la situación ingresando las diferencias.",
+    "opcion_b": "No hacer nada.",
+    "opcion_c": "Esperar inspección.",
+    "opcion_d": "Comunicarlo al trabajador únicamente.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe regularizarse la cotización ingresando las diferencias.",
+    "feedback_error": "El error es no corregir la cotización incorrecta."
+  },
+  {
+    "id": "7",
+    "materia": "Seguridad Social",
+    "tema": "Recaudación",
+    "situacion": "Una empresa no ingresa las cuotas dentro del plazo establecido.",
+    "pregunta": "¿Qué consecuencia puede producirse?",
+    "opcion_a": "Aplicación de recargos.",
+    "opcion_b": "No ocurre nada.",
+    "opcion_c": "Se cancela la deuda automáticamente.",
+    "opcion_d": "Solo se informa al trabajador.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "El ingreso fuera de plazo genera recargos.",
+    "feedback_error": "El error es ignorar las consecuencias del retraso."
+  },
+  {
+    "id": "8",
+    "materia": "Laboral",
+    "tema": "Contrato de trabajo",
+    "situacion": "Una empresa va a contratar a una persona.",
+    "pregunta": "¿Qué debe hacer antes de que comience a trabajar?",
+    "opcion_a": "Formalizar el contrato y dar de alta en Seguridad Social.",
+    "opcion_b": "Solo firmar el contrato.",
+    "opcion_c": "Solo dar de alta.",
+    "opcion_d": "Esperar al primer día.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe formalizar el contrato y tramitar el alta antes del inicio.",
+    "feedback_error": "El error es no cumplir ambos requisitos previos."
+  },
+  {
+    "id": "9",
+    "materia": "Laboral",
+    "tema": "Periodo de prueba",
+    "situacion": "Una persona está en periodo de prueba.",
+    "pregunta": "¿Qué implica esta situación?",
+    "opcion_a": "Ambas partes pueden extinguir la relación sin causa.",
+    "opcion_b": "No puede extinguirse.",
+    "opcion_c": "Solo puede extinguir la empresa.",
+    "opcion_d": "Solo puede extinguir el trabajador.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Durante el periodo de prueba ambas partes pueden desistir.",
+    "feedback_error": "El error es limitar la facultad de extinción."
+  },
+  {
+    "id": "10",
+    "materia": "Laboral",
+    "tema": "Jornada",
+    "situacion": "Una empresa quiere modificar la jornada de un trabajador.",
+    "pregunta": "¿Qué debe hacer?",
+    "opcion_a": "Aplicar la modificación conforme a la normativa.",
+    "opcion_b": "Cambiarla sin comunicar.",
+    "opcion_c": "Ignorar la normativa.",
+    "opcion_d": "Decidir unilateralmente sin procedimiento.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Las modificaciones deben ajustarse a la normativa aplicable.",
+    "feedback_error": "El error es modificar condiciones sin procedimiento."
+  },
+  {
+    "id": "11",
+    "materia": "Seguridad Social",
+    "tema": "Altas",
+    "situacion": "Un trabajador empieza a trabajar sin estar dado de alta.",
+    "pregunta": "¿Qué situación se produce?",
+    "opcion_a": "Incumplimiento de la obligación de alta.",
+    "opcion_b": "Situación regular.",
+    "opcion_c": "No tiene consecuencias.",
+    "opcion_d": "Depende del contrato.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "La falta de alta es un incumplimiento.",
+    "feedback_error": "El error es considerar válida la situación."
+  },
+  {
+    "id": "12",
+    "materia": "Seguridad Social",
+    "tema": "Variaciones",
+    "situacion": "Se modifica el salario de un trabajador.",
+    "pregunta": "¿Qué debe hacer la empresa?",
+    "opcion_a": "Comunicar la variación.",
+    "opcion_b": "No comunicar nada.",
+    "opcion_c": "Esperar a final de año.",
+    "opcion_d": "Solo reflejarlo en nómina.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Las variaciones deben comunicarse.",
+    "feedback_error": "El error es no informar cambios relevantes."
+  },
+  {
+    "id": "13",
+    "materia": "Seguridad Social",
+    "tema": "Recaudación",
+    "situacion": "Una empresa tiene deuda con la Seguridad Social.",
+    "pregunta": "¿Qué puede suceder?",
+    "opcion_a": "Inicio de procedimiento recaudatorio.",
+    "opcion_b": "Nada.",
+    "opcion_c": "Se elimina la deuda.",
+    "opcion_d": "Se traslada al trabajador.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Las deudas generan actuaciones recaudatorias.",
+    "feedback_error": "El error es pensar que no tiene consecuencias."
+  },
+  {
+    "id": "14",
+    "materia": "Laboral",
+    "tema": "Extinción",
+    "situacion": "Finaliza un contrato temporal.",
+    "pregunta": "¿Qué debe hacer la empresa?",
+    "opcion_a": "Gestionar la extinción y comunicar la baja.",
+    "opcion_b": "No hacer nada.",
+    "opcion_c": "Mantener al trabajador sin contrato.",
+    "opcion_d": "Esperar.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe gestionarse correctamente la finalización.",
+    "feedback_error": "El error es no formalizar la extinción."
+  },
+  {
+    "id": "15",
+    "materia": "Seguridad Social",
+    "tema": "Cotización",
+    "situacion": "Una persona trabaja y no se cotiza por ella.",
+    "pregunta": "¿Qué implica?",
+    "opcion_a": "Incumplimiento de la obligación de cotizar.",
+    "opcion_b": "Situación válida.",
+    "opcion_c": "Opcional.",
+    "opcion_d": "Sin consecuencias.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe cotizarse por toda prestación de servicios.",
+    "feedback_error": "El error es ignorar la obligación."
+  },
+  {
+    "id": "16",
+    "materia": "Laboral",
+    "tema": "Contrato",
+    "situacion": "Una empresa contrata sin formalizar por escrito.",
+    "pregunta": "¿Qué problema existe?",
+    "opcion_a": "Falta de formalización adecuada.",
+    "opcion_b": "No hay problema.",
+    "opcion_c": "Es obligatorio siempre verbal.",
+    "opcion_d": "Depende del trabajador.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe formalizarse conforme a normativa.",
+    "feedback_error": "El error es no formalizar correctamente."
+  },
+  {
+    "id": "17",
+    "materia": "Seguridad Social",
+    "tema": "Altas",
+    "situacion": "La empresa comunica el alta después del inicio.",
+    "pregunta": "¿Qué implica?",
+    "opcion_a": "Incumplimiento de plazo.",
+    "opcion_b": "Situación correcta.",
+    "opcion_c": "No tiene importancia.",
+    "opcion_d": "Es válido siempre.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "El alta debe ser previa al inicio.",
+    "feedback_error": "El error es no respetar el plazo."
+  },
+  {
+    "id": "18",
+    "materia": "Seguridad Social",
+    "tema": "Recaudación",
+    "situacion": "Se paga fuera de plazo.",
+    "pregunta": "¿Qué sucede?",
+    "opcion_a": "Se generan recargos.",
+    "opcion_b": "Nada.",
+    "opcion_c": "Se elimina la deuda.",
+    "opcion_d": "No se paga.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "El retraso genera recargos.",
+    "feedback_error": "El error es ignorar consecuencias."
+  },
+  {
+    "id": "19",
+    "materia": "Laboral",
+    "tema": "Jornada",
+    "situacion": "Se modifica la jornada sin comunicar.",
+    "pregunta": "¿Qué problema hay?",
+    "opcion_a": "Incumplimiento de procedimiento.",
+    "opcion_b": "Ninguno.",
+    "opcion_c": "Es correcto.",
+    "opcion_d": "Depende.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe seguirse procedimiento.",
+    "feedback_error": "El error es actuar sin formalidad."
+  },
+  {
+    "id": "20",
+    "materia": "Seguridad Social",
+    "tema": "Variaciones",
+    "situacion": "Cambio en condiciones laborales.",
+    "pregunta": "¿Qué corresponde?",
+    "opcion_a": "Comunicar la variación.",
+    "opcion_b": "No hacer nada.",
+    "opcion_c": "Esperar.",
+    "opcion_d": "Solo registrar internamente.",
+    "respuesta_correcta": "A",
+    "feedback_correcto": "Debe comunicarse el cambio.",
+    "feedback_error": "El error es no informar."
+  }
 ]
-ERRORS_FILE = "errores_simulador.json"
-
-st.set_page_config(
-    page_title="Simulador de práctica laboral",
-    page_icon="📘",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
-
-# ------------------------------------------------------------
-# CARGA DE DATOS
-# ------------------------------------------------------------
-def load_json_file(path):
-    if not os.path.exists(path):
-        return []
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data if isinstance(data, list) else []
-    except Exception:
-        return []
-
-
-def load_questions():
-    candidates = []
-    for path in CANDIDATE_FILES:
-        data = load_json_file(path)
-        candidates.append((path, data, len(data)))
-
-    candidates.sort(key=lambda x: x[2], reverse=True)
-    best_path, best_data, best_n = candidates[0]
-
-    if best_n == 0:
-        st.error("No se encontró ningún banco válido. Sube simulador_base_final.json.")
-        st.stop()
-
-    required_keys = {
-        "id",
-        "materia",
-        "tema",
-        "situacion",
-        "pregunta",
-        "opcion_a",
-        "opcion_b",
-        "opcion_c",
-        "opcion_d",
-        "respuesta_correcta",
-        "feedback_correcto",
-        "feedback_error",
-    }
-
-    cleaned = []
-    for row in best_data:
-        if not isinstance(row, dict):
-            continue
-        if required_keys - set(row.keys()):
-            continue
-
-        cleaned.append(
-            {
-                "id": str(row["id"]),
-                "materia": str(row["materia"]),
-                "tema": str(row["tema"]),
-                "situacion": str(row["situacion"]),
-                "pregunta": str(row["pregunta"]),
-                "opcion_a": str(row["opcion_a"]),
-                "opcion_b": str(row["opcion_b"]),
-                "opcion_c": str(row["opcion_c"]),
-                "opcion_d": str(row["opcion_d"]),
-                "respuesta_correcta": str(row["respuesta_correcta"]).strip().upper(),
-                "feedback_correcto": str(row["feedback_correcto"]),
-                "feedback_error": str(row["feedback_error"]),
-            }
-        )
-
-    if not cleaned:
-        st.error("El archivo encontrado no contiene registros válidos.")
-        st.stop()
-
-    return cleaned, best_path
-
-
-def load_errors():
-    if not os.path.exists(ERRORS_FILE):
-        return []
-    try:
-        with open(ERRORS_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return data if isinstance(data, list) else []
-    except Exception:
-        return []
-
-
-def save_errors(errors):
-    try:
-        with open(ERRORS_FILE, "w", encoding="utf-8") as f:
-            json.dump(errors, f, ensure_ascii=False, indent=2)
-    except Exception:
-        pass
-
-
-questions, active_data_file = load_questions()
-
-# ------------------------------------------------------------
-# HELPERS
-# ------------------------------------------------------------
-def unique_by_id(items):
-    seen = set()
-    out = []
-    for item in items:
-        item_id = str(item.get("id", ""))
-        if item_id and item_id not in seen:
-            seen.add(item_id)
-            out.append(item)
-    return out
-
-
-def build_option_map(q):
-    return {
-        "A": q["opcion_a"],
-        "B": q["opcion_b"],
-        "C": q["opcion_c"],
-        "D": q["opcion_d"],
-    }
-
-
-def get_topic_counts(items):
-    counts = {}
-    for item in items:
-        tema = str(item.get("tema", "Sin tema"))
-        counts[tema] = counts.get(tema, 0) + 1
-    return counts
-
-
-def get_performance_message(pct):
-    if pct >= 90:
-        return "Nivel muy sólido. Tu criterio operativo está bien orientado a un entorno real de gestión laboral."
-    if pct >= 75:
-        return "Buen nivel. Hay una base práctica clara, aunque conviene reforzar precisión en algunos trámites."
-    if pct >= 60:
-        return "Nivel intermedio. Ya identificas parte de la lógica operativa, pero todavía hay áreas de mejora relevantes."
-    return "Conviene reforzar la base, especialmente en altas, bajas, cotización y recaudación."
-
-
-def clean_feedback(text):
-    text = str(text).strip()
-    text = text.replace("Correcto.", "").replace("Incorrecto.", "").strip()
-    text = text.replace("Referencia legal:", "").strip()
-    return text
-
-
-def store_error_question(q):
-    errors = load_errors()
-    if not any(str(x.get("id", "")) == str(q["id"]) for x in errors):
-        errors.append(q)
-        save_errors(errors)
-
-
-def start_mode(mode_name, source_questions, n_questions=None):
-    session_questions = unique_by_id(source_questions.copy())
-    random.shuffle(session_questions)
-
-    if n_questions is not None:
-        session_questions = session_questions[: min(n_questions, len(session_questions))]
-
-    st.session_state.mode = mode_name
-    st.session_state.session_questions = session_questions
-    st.session_state.current_index = 0
-    st.session_state.score = 0
-    st.session_state.show_feedback = False
-    st.session_state.selected_option = None
-    st.session_state.finished = False
-    st.session_state.session_results = []
-
-
-def reset_to_menu():
-    st.session_state.mode = "menu"
-    st.session_state.session_questions = []
-    st.session_state.current_index = 0
-    st.session_state.score = 0
-    st.session_state.show_feedback = False
-    st.session_state.selected_option = None
-    st.session_state.finished = False
-    st.session_state.session_results = []
-
-
-def init_state():
-    if "mode" not in st.session_state:
-        reset_to_menu()
-
-
-init_state()
-
-# ------------------------------------------------------------
-# ESTILO SUAVE
-# ------------------------------------------------------------
-st.markdown("""
-<style>
-.block-container {
-    max-width: 1100px;
-    padding-top: 1.10rem;
-    padding-bottom: 2rem;
-}
-
-div[data-testid="stRadio"] label {
-    align-items: flex-start !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# ------------------------------------------------------------
-# COMPONENTES UI
-# ------------------------------------------------------------
-def render_top_metrics(mode_text, progress_text, score_value):
-    c1, c2, c3 = st.columns(3, gap="small")
-    with c1:
-        st.metric("Modalidad", mode_text, border=True)
-    with c2:
-        st.metric("Progreso", progress_text, border=True)
-    with c3:
-        st.metric("Aciertos", str(score_value), border=True)
-
-
-def render_menu():
-    st.title("Simulador de práctica laboral y Seguridad Social")
-    st.caption(
-        "Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo."
-    )
-
-    c1, c2 = st.columns(2, gap="large")
-
-    with c1:
-        with st.container(border=True):
-            st.subheader("Modo simulacro")
-            st.write("Sesión mixta con casos aleatorios y evaluación final.")
-            if st.button("Empezar simulacro de 20 casos", width="stretch", key="menu_simulacro"):
-                start_mode("simulacro", questions, n_questions=20)
-                st.rerun()
-
-        st.write("")
-
-        with st.container(border=True):
-            st.subheader("Repaso guiado")
-            st.write("Práctica secuencial con feedback completo tras cada respuesta.")
-            if st.button("Empezar repaso guiado", width="stretch", key="menu_repaso"):
-                start_mode("repaso", questions, n_questions=None)
-                st.rerun()
-
-    with c2:
-        errors = load_errors()
-
-        with st.container(border=True):
-            st.subheader("Repaso de errores")
-            st.write(f"Errores guardados: **{len(errors)}**")
-
-            if errors:
-                if st.button("Reestudiar errores", width="stretch", key="menu_errores"):
-                    start_mode("errores", errors, n_questions=None)
-                    st.rerun()
-            else:
-                st.info("Todavía no hay errores guardados.")
-
-            if st.button("Vaciar errores guardados", width="stretch", key="menu_vaciar"):
-                save_errors([])
-                st.success("Errores eliminados.")
-                st.rerun()
-
-        st.write("")
-
-        with st.container(border=True):
-            st.subheader("Banco disponible")
-            st.write(f"Archivo activo: **{active_data_file}**")
-            st.write(f"Casos cargados: **{len(questions)}**")
-
-            temas = get_topic_counts(questions)
-            for tema, n in sorted(temas.items(), key=lambda x: (-x[1], x[0])):
-                st.write(f"- {tema}: {n}")
-
-
-def render_question():
-    if not st.session_state.session_questions:
-        st.warning("No hay casos disponibles para este modo.")
-        if st.button("Volver al menú", width="stretch", key="empty_back"):
-            reset_to_menu()
-            st.rerun()
-        return
-
-    if st.session_state.current_index >= len(st.session_state.session_questions):
-        st.session_state.finished = True
-        st.rerun()
-        return
-
-    q = st.session_state.session_questions[st.session_state.current_index]
-    option_map = build_option_map(q)
-    total = len(st.session_state.session_questions)
-    current_num = st.session_state.current_index + 1
-
-    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-    render_top_metrics(
-        st.session_state.mode.title(),
-        f"{current_num}/{total}",
-        st.session_state.score,
-    )
-
-    st.write("")
-    st.subheader("Caso práctico")
-    st.caption(f"{q['materia']} · {q['tema']}")
-
-    st.markdown("**Situación práctica**")
-    st.write(q["situacion"])
-
-    st.markdown("**Pregunta**")
-    st.write(q["pregunta"])
-
-    st.write("")
-
-    if not st.session_state.show_feedback:
-        with st.form(key=f"form_{q['id']}"):
-            selected = st.radio(
-                "Selecciona la opción correcta:",
-                options=["A", "B", "C", "D"],
-                format_func=lambda x: f"{x}. {option_map[x]}",
-            )
-
-            c1, c2 = st.columns(2, gap="small")
-            submit_answer = c1.form_submit_button("Responder", width="stretch")
-            back_menu = c2.form_submit_button("Volver al menú", width="stretch")
-
-        if back_menu:
-            reset_to_menu()
-            st.rerun()
-
-        if submit_answer:
-            st.session_state.selected_option = selected
-
-            is_correct = selected == q["respuesta_correcta"]
-            if is_correct:
-                st.session_state.score += 1
-            else:
-                store_error_question(q)
-
-            st.session_state.session_results.append(
-                {
-                    "id": q["id"],
-                    "tema": q["tema"],
-                    "correcta": is_correct,
-                }
-            )
-
-            st.session_state.show_feedback = True
-            st.rerun()
-
-    else:
-        selected = st.session_state.selected_option
-        correct = q["respuesta_correcta"]
-
-        if selected == correct:
-            st.success("Decisión adecuada")
-        else:
-            st.error("Decisión incorrecta")
-
-        st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
-        st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
-
-        st.write("")
-        st.subheader("Explicación legal")
-        if selected == correct:
-            st.write(clean_feedback(q["feedback_correcto"]))
-        else:
-            st.write(clean_feedback(q["feedback_error"]))
-
-        st.write("")
-
-        c1, c2 = st.columns(2, gap="small")
-        if c1.button("Continuar", width="stretch", key=f"next_{q['id']}"):
-            st.session_state.current_index += 1
-            st.session_state.show_feedback = False
-            st.session_state.selected_option = None
-
-            if st.session_state.current_index >= len(st.session_state.session_questions):
-                st.session_state.finished = True
-
-            st.rerun()
-
-        if c2.button("Volver al menú", width="stretch", key=f"back_after_{q['id']}"):
-            reset_to_menu()
-            st.rerun()
-
-
-def render_final():
-    total = len(st.session_state.session_questions)
-    score = st.session_state.score
-    errors = total - score
-    pct = round((score / total) * 100) if total > 0 else 0
-
-    st.title("Resultado final")
-
-    c1, c2, c3 = st.columns(3, gap="small")
-    with c1:
-        st.metric("Aciertos", score, border=True)
-    with c2:
-        st.metric("Errores", errors, border=True)
-    with c3:
-        st.metric("Rendimiento", f"{pct}%", border=True)
-
-    st.write("")
-
-    with st.container(border=True):
-        st.subheader("Interpretación")
-        st.write(get_performance_message(pct))
-
-    st.write("")
-
-    fallados = {}
-    for r in st.session_state.session_results:
-        if not r["correcta"]:
-            tema = r["tema"]
-            fallados[tema] = fallados.get(tema, 0) + 1
-
-    with st.container(border=True):
-        st.subheader("Temas a reforzar")
-        if fallados:
-            for tema, n in sorted(fallados.items(), key=lambda x: (-x[1], x[0])):
-                st.write(f"- {tema}: {n} error(es)")
-        else:
-            st.write("No hubo errores en esta sesión.")
-
-    st.write("")
-
-    c1, c2 = st.columns(2, gap="small")
-    if c1.button("Repetir", width="stretch", key="repeat_mode"):
-        if st.session_state.mode == "simulacro":
-            start_mode("simulacro", questions, n_questions=20)
-        elif st.session_state.mode == "repaso":
-            start_mode("repaso", questions, n_questions=None)
-        else:
-            errors_list = load_errors()
-            if errors_list:
-                start_mode("errores", errors_list, n_questions=None)
-            else:
-                reset_to_menu()
-        st.rerun()
-
-    if c2.button("Volver al menú principal", width="stretch", key="final_menu"):
-        reset_to_menu()
-        st.rerun()
-
-
-# ------------------------------------------------------------
-# RENDER PRINCIPAL
-# ------------------------------------------------------------
-if st.session_state.mode == "menu":
-    render_menu()
-elif st.session_state.finished:
-    render_final()
-else:
-    render_question()
