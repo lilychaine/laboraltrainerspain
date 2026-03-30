@@ -1,302 +1,802 @@
-[
-  {
-    "id": "1",
-    "materia": "Seguridad Social",
-    "tema": "Altas",
-    "situacion": "Formas parte del departamento laboral. Una persona empieza a trabajar hoy a las 9:00 y descubres a primera hora que el alta no ha sido tramitada.",
-    "pregunta": "¿Qué actuación deberías realizar de forma inmediata?",
-    "opcion_a": "Tramitar el alta cuanto antes, aunque la persona ya haya iniciado la actividad.",
-    "opcion_b": "Esperar al cierre de mes y regularizarlo con la nómina.",
-    "opcion_c": "No actuar hasta revisar toda la documentación contractual.",
-    "opcion_d": "Comunicar la incidencia al trabajador y dejar constancia interna.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "La actuación correcta es tramitar el alta de forma inmediata. Aunque el inicio ya se haya producido, la empresa debe regularizar cuanto antes una situación que nunca debió empezar sin alta previa.",
-    "feedback_error": "El error es retrasar la regularización o limitarse a una comunicación interna. Cuando falta el alta, la prioridad es corregir de inmediato la situación administrativa.",
-    "referencia_legal": "Ley General de la Seguridad Social – alta previa al inicio de la actividad."
-  },
-  {
-    "id": "2",
-    "materia": "Seguridad Social",
-    "tema": "Afiliación",
-    "situacion": "Se incorpora una persona que ya ha trabajado antes en otras empresas y te preguntan si hay que volver a afiliarla.",
-    "pregunta": "¿Qué trámite corresponde realmente?",
-    "opcion_a": "Solicitar una nueva afiliación porque cambia de empresa.",
-    "opcion_b": "Comprobar su situación y tramitar únicamente el alta si procede.",
-    "opcion_c": "Esperar a la primera nómina para verificar si ya consta en el sistema.",
-    "opcion_d": "Dar por hecho que la anterior empresa mantiene la afiliación activa.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "La afiliación es única para toda la vida laboral. Si la persona ya está afiliada, lo que corresponde en la nueva empresa es tramitar el alta, no una nueva afiliación.",
-    "feedback_error": "El error es confundir afiliación con alta o dejar el trámite para más adelante. La empresa debe identificar la situación real y cursar el alta correspondiente.",
-    "referencia_legal": "Ley General de la Seguridad Social – afiliación única y altas sucesivas."
-  },
-  {
-    "id": "3",
-    "materia": "Seguridad Social",
-    "tema": "Bajas",
-    "situacion": "Un contrato temporal finaliza este viernes y el responsable del área te dice que no hace falta tocar nada porque la relación ya se extingue sola.",
-    "pregunta": "¿Qué deberías hacer?",
-    "opcion_a": "No hacer ninguna actuación, porque el contrato ya terminó.",
-    "opcion_b": "Comunicar la baja en Seguridad Social al finalizar la relación laboral.",
-    "opcion_c": "Esperar a ver si la persona vuelve a ser contratada la semana siguiente.",
-    "opcion_d": "Limitarte a enviar el finiquito y archivar el expediente.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Cuando cesa la relación laboral, la empresa debe comunicar la baja. La finalización del contrato no sustituye por sí sola el deber de comunicar el cese.",
-    "feedback_error": "El error es pensar que el fin del contrato elimina la obligación administrativa de baja. Son actuaciones relacionadas, pero no equivalentes.",
-    "referencia_legal": "Ley General de la Seguridad Social – obligación de comunicar bajas."
-  },
-  {
-    "id": "4",
-    "materia": "Seguridad Social",
-    "tema": "Variaciones",
-    "situacion": "Una persona pasa de jornada completa a jornada parcial a partir del próximo mes y la empresa quiere reflejarlo solo en nómina.",
-    "pregunta": "¿Qué actuación es la más correcta?",
-    "opcion_a": "Reflejar el cambio solo en nómina porque no afecta a Seguridad Social.",
-    "opcion_b": "Comunicar la variación de datos correspondiente.",
-    "opcion_c": "Dar de baja al trabajador y tramitar un alta nueva.",
-    "opcion_d": "Esperar al cierre trimestral para informar del cambio.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Las modificaciones relevantes de la relación laboral, como la jornada, deben comunicarse como variación de datos. No basta con reflejarlas internamente.",
-    "feedback_error": "El error es no comunicar el cambio o transformarlo en una baja y alta innecesarias. La vía correcta es la variación de datos.",
-    "referencia_legal": "Normativa de afiliación y variaciones de datos en Seguridad Social."
-  },
-  {
-    "id": "5",
-    "materia": "Seguridad Social",
-    "tema": "Cotización",
-    "situacion": "Detectas que una persona ha estado prestando servicios, pero no se ha incluido correctamente en la cotización del mes.",
-    "pregunta": "¿Qué criterio debe aplicar la empresa?",
-    "opcion_a": "Esperar a una revisión externa antes de actuar.",
-    "opcion_b": "Regularizar la situación e ingresar las diferencias que procedan.",
-    "opcion_c": "Compensarlo en los meses siguientes sin comunicarlo.",
-    "opcion_d": "Solicitar al trabajador que asuma la diferencia en su próxima nómina.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Si existe una diferencia de cotización, la empresa debe regularizarla. La obligación de cotizar no desaparece por el hecho de haber cometido un error previo.",
-    "feedback_error": "El error es aplazar la regularización, compensarla de forma informal o trasladar al trabajador una obligación que corresponde a la empresa.",
-    "referencia_legal": "Ley General de la Seguridad Social – obligación de cotizar e ingreso de cuotas."
-  },
-  {
-    "id": "6",
-    "materia": "Seguridad Social",
-    "tema": "Recaudación",
-    "situacion": "La empresa no ha ingresado las cuotas dentro del plazo reglamentario y pregunta si basta con pagar más tarde sin más consecuencias.",
-    "pregunta": "¿Qué respuesta deberías dar?",
-    "opcion_a": "Que puede ingresar cuando quiera sin efectos añadidos.",
-    "opcion_b": "Que el ingreso fuera de plazo puede generar recargos.",
-    "opcion_c": "Que solo habrá consecuencias si lo reclama el trabajador.",
-    "opcion_d": "Que basta con justificar internamente el retraso.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "El ingreso fuera de plazo no es neutro: puede generar recargos y otras consecuencias recaudatorias. La empresa debe anticipar ese efecto.",
-    "feedback_error": "El error es trivializar el retraso o tratarlo como una simple incidencia interna sin efectos jurídicos.",
-    "referencia_legal": "Normativa recaudatoria de la Seguridad Social – recargos por ingreso fuera de plazo."
-  },
-  {
-    "id": "7",
-    "materia": "Laboral",
-    "tema": "Contratación",
-    "situacion": "Una persona va a incorporarse mañana y el responsable propone que empiece a trabajar mientras luego se termina la documentación.",
-    "pregunta": "¿Qué decisión es la más adecuada?",
-    "opcion_a": "Permitir la incorporación y completar la documentación cuando sea posible.",
-    "opcion_b": "Asegurar antes de la incorporación la formalización contractual y las gestiones administrativas necesarias.",
-    "opcion_c": "Dejar que empiece y firmar el contrato a final de semana.",
-    "opcion_d": "Esperar solo a que el trabajador confirme verbalmente las condiciones.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "La incorporación debe prepararse correctamente antes del inicio efectivo. La empresa no debería normalizar que la documentación se resuelva una vez comenzada la actividad.",
-    "feedback_error": "El error es convertir una urgencia operativa en una práctica habitual sin cobertura formal suficiente.",
-    "referencia_legal": "Estatuto de los Trabajadores y normativa de Seguridad Social aplicable al inicio de la relación laboral."
-  },
-  {
-    "id": "8",
-    "materia": "Laboral",
-    "tema": "Periodo de prueba",
-    "situacion": "Un mando intermedio te dice que, como la persona está en periodo de prueba, no hace falta preocuparse demasiado por la formalización del proceso.",
-    "pregunta": "¿Qué interpretación es correcta?",
-    "opcion_a": "El periodo de prueba elimina las obligaciones formales de la empresa.",
-    "opcion_b": "El periodo de prueba permite cualquier decisión sin marco jurídico.",
-    "opcion_c": "El periodo de prueba no elimina las obligaciones formales ni administrativas de la relación laboral.",
-    "opcion_d": "Durante el periodo de prueba no hace falta contrato si existe acuerdo verbal.",
-    "respuesta_correcta": "C",
-    "feedback_correcto": "El periodo de prueba no suspende las obligaciones formales ni administrativas. La relación laboral existe y debe estar correctamente documentada y gestionada.",
-    "feedback_error": "El error es pensar que el periodo de prueba funciona como una zona libre de reglas o formalidades.",
-    "referencia_legal": "Estatuto de los Trabajadores – periodo de prueba."
-  },
-  {
-    "id": "9",
-    "materia": "Laboral",
-    "tema": "Jornada",
-    "situacion": "Un responsable modifica de hecho la jornada de una persona para adaptarla a necesidades del servicio, pero no comunica el cambio ni revisa su encaje.",
-    "pregunta": "¿Qué problema principal detectas?",
-    "opcion_a": "Ninguno, si el cambio mejora la organización interna.",
-    "opcion_b": "Que una modificación de jornada no debe improvisarse sin revisar su tratamiento y comunicación.",
-    "opcion_c": "Que solo hay problema si el trabajador presenta una queja formal.",
-    "opcion_d": "Que basta con reflejar el cambio en el calendario interno.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "La jornada no debería modificarse de hecho sin revisar el marco aplicable y la forma de documentar la decisión. La organización interna no sustituye el cumplimiento.",
-    "feedback_error": "El error es tratar la jornada como una cuestión puramente interna sin relevancia jurídica ni necesidad de control.",
-    "referencia_legal": "Estatuto de los Trabajadores – jornada y tiempo de trabajo."
-  },
-  {
-    "id": "10",
-    "materia": "Seguridad Social",
-    "tema": "Altas",
-    "situacion": "La empresa tramita el alta el mismo día de inicio, pero después de que la persona ya haya comenzado a trabajar.",
-    "pregunta": "¿Cuál es la valoración correcta?",
-    "opcion_a": "Es válido porque se ha comunicado dentro del mismo día.",
-    "opcion_b": "Es correcto si el contrato ya estaba firmado.",
-    "opcion_c": "No es correcto, porque el alta debe ser previa al inicio efectivo.",
-    "opcion_d": "Solo sería incorrecto si la jornada fuera completa.",
-    "respuesta_correcta": "C",
-    "feedback_correcto": "La alta debe ser previa al inicio real de la actividad. Que se haya comunicado más tarde el mismo día no elimina el incumplimiento inicial.",
-    "feedback_error": "El error es confundir rapidez posterior con cumplimiento previo. Lo exigible es que la situación esté regularizada antes de empezar a trabajar.",
-    "referencia_legal": "Ley General de la Seguridad Social – alta previa."
-  },
-  {
-    "id": "11",
-    "materia": "Seguridad Social",
-    "tema": "Variaciones",
-    "situacion": "Se actualiza el salario de un trabajador, pero desde administración se plantea dejar el cambio solo reflejado en nómina interna.",
-    "pregunta": "¿Qué actuación es la más adecuada?",
-    "opcion_a": "Basta con reflejar el cambio en nómina.",
-    "opcion_b": "Debe valorarse y, en su caso, comunicarse la variación correspondiente.",
-    "opcion_c": "No debe hacerse nada hasta que cambie también la jornada.",
-    "opcion_d": "Solo debe comunicarse si lo solicita el trabajador.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Los cambios relevantes deben revisarse desde el punto de vista administrativo y no limitarse a un ajuste interno de nómina.",
-    "feedback_error": "El error es considerar que una modificación económica solo tiene efectos internos y no puede requerir actualización administrativa.",
-    "referencia_legal": "Normativa de Seguridad Social sobre variaciones de datos."
-  },
-  {
-    "id": "12",
-    "materia": "Seguridad Social",
-    "tema": "Deuda",
-    "situacion": "La empresa acumula una deuda con la Seguridad Social y alguien propone no hacer nada hasta recibir una notificación formal.",
-    "pregunta": "¿Qué enfoque es más correcto?",
-    "opcion_a": "Esperar siempre a la reclamación formal antes de actuar.",
-    "opcion_b": "Revisar de inmediato la situación y preparar la regularización o respuesta correspondiente.",
-    "opcion_c": "Ignorar la deuda hasta el siguiente trimestre.",
-    "opcion_d": "Trasladar el problema al trabajador afectado.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Cuando existe una incidencia de deuda, la empresa no debería adoptar una actitud pasiva. Lo adecuado es revisar la situación y anticipar la respuesta procedente.",
-    "feedback_error": "El error es dejar evolucionar la incidencia sin control, como si la falta de actuación redujera el riesgo jurídico o económico.",
-    "referencia_legal": "Normativa recaudatoria de la Seguridad Social – reclamación de deuda y actuaciones posteriores."
-  },
-  {
-    "id": "13",
-    "materia": "Laboral",
-    "tema": "Tiempo parcial",
-    "situacion": "Una persona contratada a tiempo parcial empieza a hacer de forma habitual más horas de las previstas, sin control formal suficiente.",
-    "pregunta": "¿Qué deberías revisar primero?",
-    "opcion_a": "Si la situación encaja con el régimen aplicable y con el control exigible.",
-    "opcion_b": "Solo si el trabajador está conforme verbalmente.",
-    "opcion_c": "Si el responsable necesita mantener ese ritmo unas semanas más.",
-    "opcion_d": "Nada, porque mientras se paguen las horas no hay problema.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "En el trabajo a tiempo parcial, el control y el encaje jurídico del tiempo de trabajo son esenciales. No basta con una conformidad informal.",
-    "feedback_error": "El error es tratar el exceso de horas como una simple cuestión organizativa o retributiva, sin revisar el marco aplicable.",
-    "referencia_legal": "Estatuto de los Trabajadores – trabajo a tiempo parcial."
-  },
-  {
-    "id": "14",
-    "materia": "Laboral",
-    "tema": "Subcontratación",
-    "situacion": "La empresa va a iniciar una contrata y desde operaciones preguntan si basta con firmar el acuerdo comercial con la otra empresa.",
-    "pregunta": "¿Qué criterio es más prudente?",
-    "opcion_a": "Basta con el acuerdo mercantil si el servicio empieza pronto.",
-    "opcion_b": "Antes de iniciar la contrata conviene verificar también las obligaciones laborales y de Seguridad Social que resulten exigibles.",
-    "opcion_c": "No debe revisarse nada hasta que surja una incidencia.",
-    "opcion_d": "La responsabilidad es siempre exclusiva de la contratista, así que no hace falta comprobación.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "En contratas y subcontratas, la revisión no debería limitarse al plano comercial. Es prudente comprobar también las obligaciones laborales y de Seguridad Social relevantes.",
-    "feedback_error": "El error es reducir la contrata a un acuerdo mercantil y olvidar los deberes de verificación o control asociados.",
-    "referencia_legal": "Estatuto de los Trabajadores – contratas y subcontratas."
-  },
-  {
-    "id": "15",
-    "materia": "Seguridad Social",
-    "tema": "Responsable de cotización",
-    "situacion": "En una reunión surge la duda de si el trabajador puede asumir por su cuenta el ingreso ordinario de las cuotas si la empresa tiene problemas de tesorería.",
-    "pregunta": "¿Qué respuesta es correcta?",
-    "opcion_a": "Sí, el trabajador puede sustituir a la empresa en el ingreso ordinario si ambos están de acuerdo.",
-    "opcion_b": "No, la empresa sigue siendo la obligada principal en el ingreso de cuotas.",
-    "opcion_c": "Solo ocurre así en contratos temporales.",
-    "opcion_d": "Depende del salario mensual.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "La obligación principal de ingreso corresponde a la empresa. No se transforma en una carga ordinaria del trabajador por razones internas de tesorería.",
-    "feedback_error": "El error es desplazar informalmente una obligación empresarial hacia el trabajador como si se tratara de un pacto válido.",
-    "referencia_legal": "Ley General de la Seguridad Social – sujetos obligados y responsable del ingreso."
-  },
-  {
-    "id": "16",
-    "materia": "Laboral",
-    "tema": "Extinción",
-    "situacion": "Una relación laboral finaliza y el responsable propone dejar la documentación para más adelante porque la salida ya es conocida por todos.",
-    "pregunta": "¿Qué deberías priorizar?",
-    "opcion_a": "La gestión formal del cese y sus comunicaciones correspondientes.",
-    "opcion_b": "Nada, porque si todos conocen la salida ya no hace falta documentar más.",
-    "opcion_c": "Esperar a ver si la persona reclama algo.",
-    "opcion_d": "Limitarse a devolver sus accesos internos.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Cuando una relación finaliza, la empresa debe cerrar correctamente la gestión formal y administrativa del cese. El conocimiento interno no sustituye esa obligación.",
-    "feedback_error": "El error es tratar una salida conocida como si ya estuviera jurídicamente cerrada sin más actuaciones.",
-    "referencia_legal": "Estatuto de los Trabajadores y normativa administrativa vinculada al cese."
-  },
-  {
-    "id": "17",
-    "materia": "Seguridad Social",
-    "tema": "Recaudación",
-    "situacion": "Una empresa plantea ingresar solo parte de la deuda y dejar el resto pendiente indefinidamente hasta tener más liquidez.",
-    "pregunta": "¿Qué análisis es más adecuado?",
-    "opcion_a": "Es una solución suficiente sin efectos adicionales.",
-    "opcion_b": "La empresa debe valorar que una deuda pendiente puede mantener consecuencias recaudatorias y exige una gestión activa.",
-    "opcion_c": "No hay consecuencias mientras se pague una parte.",
-    "opcion_d": "La deuda desaparece si se comunica internamente el problema.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Una deuda no desaparece por el hecho de atenderla parcialmente. La empresa debe gestionar activamente la situación y sus consecuencias recaudatorias.",
-    "feedback_error": "El error es pensar que un pago parcial neutraliza por sí solo el problema o lo deja sin recorrido posterior.",
-    "referencia_legal": "Normativa recaudatoria de la Seguridad Social."
-  },
-  {
-    "id": "18",
-    "materia": "Laboral",
-    "tema": "Cambio de centro",
-    "situacion": "Un trabajador pasa a prestar servicios en otro centro de trabajo y desde el área operativa se asume que basta con comunicarlo verbalmente.",
-    "pregunta": "¿Qué deberías comprobar?",
-    "opcion_a": "Si el cambio requiere tratamiento y actualización administrativa adecuada.",
-    "opcion_b": "Nada, porque el cambio de centro es puramente interno.",
-    "opcion_c": "Solo si cambia también el salario.",
-    "opcion_d": "Solo si el trabajador se opone expresamente.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Los cambios organizativos no siempre son neutros desde el punto de vista de gestión laboral. Deben revisarse y tratarse correctamente cuando proceda.",
-    "feedback_error": "El error es dar por hecho que un cambio de centro nunca exige revisión administrativa o documental.",
-    "referencia_legal": "Normativa laboral y administrativa aplicable a cambios relevantes en la relación laboral."
-  },
-  {
-    "id": "19",
-    "materia": "Seguridad Social",
-    "tema": "Alta fuera de plazo",
-    "situacion": "Tras detectar una falta de alta, alguien propone esperar unos días para reunir toda la documentación antes de hacer cualquier trámite.",
-    "pregunta": "¿Qué enfoque es más correcto?",
-    "opcion_a": "Esperar para presentar un expediente más completo.",
-    "opcion_b": "Regularizar cuanto antes la situación administrativa y completar después lo necesario.",
-    "opcion_c": "No hacer nada hasta recibir requerimiento.",
-    "opcion_d": "Suspender toda actuación hasta que el trabajador firme una declaración interna.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Ante una falta de alta, la prioridad es regularizar cuanto antes la situación. La perfección documental no debe utilizarse como excusa para retrasar la actuación básica.",
-    "feedback_error": "El error es aplazar la regularización por razones organizativas internas, aumentando así el riesgo derivado del incumplimiento.",
-    "referencia_legal": "Ley General de la Seguridad Social – alta y regularización."
-  },
-  {
-    "id": "20",
-    "materia": "Laboral",
-    "tema": "Gestión operativa",
-    "situacion": "Eres la persona de apoyo en el departamento laboral y recibes una incidencia urgente relacionada con incorporación, contrato y Seguridad Social, pero la información llega incompleta.",
-    "pregunta": "¿Qué criterio de trabajo es más profesional?",
-    "opcion_a": "Esperar a tener un expediente perfecto antes de actuar.",
-    "opcion_b": "Identificar primero la obligación inmediata, asegurar la actuación crítica y completar después la revisión del resto.",
-    "opcion_c": "Resolver solo la parte que te haya pedido el responsable directo, sin revisar implicaciones.",
-    "opcion_d": "Dejar la incidencia para cuando haya menos carga de trabajo.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "En gestión laboral, muchas veces la clave está en priorizar bien: identificar la obligación inmediata crítica, asegurar su cumplimiento y después completar el resto de comprobaciones.",
-    "feedback_error": "El error es no jerarquizar las actuaciones y permitir que una incidencia urgente permanezca abierta por falta de orden operativo.",
-    "referencia_legal": "Criterio operativo derivado de obligaciones laborales y de Seguridad Social aplicables al caso."
-  }
+import json
+import os
+import random
+import streamlit as st
+
+DATA_FILE = "simulador_base_final.json"
+ERRORS_FILE = "errores_simulador.json"
+
+st.set_page_config(
+    page_title="Simulador de práctica laboral",
+    page_icon="📘",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
+
+# ------------------------------------------------------------
+# CARGA
+# ------------------------------------------------------------
+def load_questions():
+    if not os.path.exists(DATA_FILE):
+        st.error(f"No se encontró {DATA_FILE}")
+        st.stop()
+
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        st.error(f"No se pudo leer {DATA_FILE}: {e}")
+        st.stop()
+
+    if isinstance(data, dict):
+        if "questions" in data and isinstance(data["questions"], list):
+            data = data["questions"]
+        else:
+            st.error("El JSON no tiene formato válido. Debe ser una lista de preguntas.")
+            st.stop()
+
+    if not isinstance(data, list):
+        st.error("El JSON no tiene formato válido. Debe ser una lista.")
+        st.stop()
+
+    required = {
+        "id",
+        "materia",
+        "tema",
+        "situacion",
+        "pregunta",
+        "opcion_a",
+        "opcion_b",
+        "opcion_c",
+        "opcion_d",
+        "respuesta_correcta",
+        "feedback_correcto",
+        "feedback_error",
+        "referencia_legal",
+    }
+
+    cleaned = []
+    seen = set()
+
+    for i, row in enumerate(data, start=1):
+        if not isinstance(row, dict):
+            continue
+        if required - set(row.keys()):
+            continue
+
+        qid = str(row["id"]).strip()
+        if not qid or qid in seen:
+            continue
+        seen.add(qid)
+
+        cleaned.append(
+            {
+                "id": qid,
+                "materia": str(row["materia"]).strip(),
+                "tema": str(row["tema"]).strip(),
+                "situacion": str(row["situacion"]).strip(),
+                "pregunta": str(row["pregunta"]).strip(),
+                "opcion_a": str(row["opcion_a"]).strip(),
+                "opcion_b": str(row["opcion_b"]).strip(),
+                "opcion_c": str(row["opcion_c"]).strip(),
+                "opcion_d": str(row["opcion_d"]).strip(),
+                "respuesta_correcta": str(row["respuesta_correcta"]).strip().upper(),
+                "feedback_correcto": str(row["feedback_correcto"]).strip(),
+                "feedback_error": str(row["feedback_error"]).strip(),
+                "referencia_legal": str(row["referencia_legal"]).strip(),
+            }
+        )
+
+    if len(cleaned) == 0:
+        st.error("No hay preguntas válidas en el banco.")
+        st.stop()
+
+    return cleaned
+
+
+def load_errors():
+    if not os.path.exists(ERRORS_FILE):
+        return []
+
+    try:
+        with open(ERRORS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return data
+        return []
+    except Exception:
+        return []
+
+
+def save_errors(errors):
+    try:
+        with open(ERRORS_FILE, "w", encoding="utf-8") as f:
+            json.dump(errors, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+QUESTIONS = load_questions()
+
+# ------------------------------------------------------------
+# HELPERS
+# ------------------------------------------------------------
+def get_topic_counts(items):
+    counts = {}
+    for item in items:
+        tema = item["tema"]
+        counts[tema] = counts.get(tema, 0) + 1
+    return counts
+
+
+def build_option_map(q):
+    return {
+        "A": q["opcion_a"],
+        "B": q["opcion_b"],
+        "C": q["opcion_c"],
+        "D": q["opcion_d"],
+    }
+
+
+def normalize_feedback(text):
+    text = str(text).strip()
+    if text.lower().startswith("correcto."):
+        text = text[len("correcto."):].strip()
+    if text.lower().startswith("incorrecto."):
+        text = text[len("incorrecto."):].strip()
+    return text
+
+
+def get_performance_message(pct):
+    if pct >= 90:
+        return "Nivel muy sólido. Tu criterio operativo es fuerte y consistente."
+    if pct >= 75:
+        return "Buen nivel. Hay base práctica clara, aunque conviene afinar algunos detalles."
+    if pct >= 60:
+        return "Nivel intermedio. Ya identificas buena parte de la lógica, pero todavía hay margen de mejora."
+    return "Conviene reforzar la base operativa antes de confiar en automatismos."
+
+
+def unique_by_id(items):
+    seen = set()
+    out = []
+    for item in items:
+        qid = str(item.get("id", ""))
+        if qid and qid not in seen:
+            seen.add(qid)
+            out.append(item)
+    return out
+
+
+def start_mode(mode_name, source_questions, n_questions=None):
+    if not isinstance(source_questions, list):
+        st.error("El banco de preguntas no tiene formato válido.")
+        st.stop()
+
+    data = unique_by_id(source_questions.copy())
+    random.shuffle(data)
+
+    if n_questions is not None:
+        data = data[: min(n_questions, len(data))]
+
+    st.session_state.mode = mode_name
+    st.session_state.data = data
+    st.session_state.i = 0
+    st.session_state.score = 0
+    st.session_state.feedback = False
+    st.session_state.sel = None
+    st.session_state.session_results = []
+
+
+def reset_app():
+    st.session_state.mode = "menu"
+    st.session_state.data = []
+    st.session_state.i = 0
+    st.session_state.score = 0
+    st.session_state.feedback = False
+    st.session_state.sel = None
+    st.session_state.session_results = []
+
+
+def store_error_question(q):
+    errors = load_errors()
+    if not any(str(x.get("id", "")) == str(q["id"]) for x in errors):
+        errors.append(q)
+        save_errors(errors)
+
+
+if "mode" not in st.session_state:
+    reset_app()
+
+# ------------------------------------------------------------
+# ESTILO
+# ------------------------------------------------------------
+st.markdown("""
+<style>
+.block-container {
+    max-width: 1120px;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+div[data-testid="stRadio"] label {
+    align-items: flex-start !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------------------
+# UI
+# ------------------------------------------------------------
+def render_top_metrics():
+    total = len(st.session_state.data)
+    current = st.session_state.i + 1 if total > 0 else 0
+
+    c1, c2, c3 = st.columns(3, gap="small")
+    with c1:
+        st.metric("Modalidad", st.session_state.mode.title(), border=True)
+    with c2:
+        st.metric("Progreso", f"{current}/{total}", border=True)
+    with c3:
+        st.metric("Aciertos", st.session_state.score, border=True)
+
+
+def render_menu():
+    st.title("Simulador de práctica laboral y Seguridad Social")
+    st.caption("Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo.")
+
+    left, right = st.columns(2, gap="large")
+
+    with left:
+        with st.container(border=True):
+            st.subheader("Modo simulacro")
+            st.write("Sesión mixta con casos aleatorios y evaluación final.")
+            if st.button("Empezar simulacro de 20 casos", use_container_width=True, key="btn_simulacro"):
+                start_mode("simulacro", QUESTIONS, 20)
+                st.rerun()
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Repaso guiado")
+            st.write("Práctica secuencial con feedback completo tras cada respuesta.")
+            if st.button("Empezar repaso guiado", use_container_width=True, key="btn_repaso"):
+                start_mode("repaso", QUESTIONS, None)
+                st.rerun()
+
+    with right:
+        errors = load_errors()
+
+        with st.container(border=True):
+            st.subheader("Repaso de errores")
+            st.write(f"Errores guardados: **{len(errors)}**")
+
+            if len(errors) > 0:
+                if st.button("Reestudiar errores", use_container_width=True, key="btn_errores"):
+                    start_mode("errores", errors, None)
+                    st.rerun()
+            else:
+                st.info("Todavía no hay errores guardados.")
+
+            if st.button("Vaciar errores guardados", use_container_width=True, key="btn_vaciar"):
+                save_errors([])
+                st.success("Errores eliminados.")
+                st.rerun()
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Banco disponible")
+            st.write(f"Casos cargados: **{len(QUESTIONS)}**")
+
+            temas = get_topic_counts(QUESTIONS)
+            for tema, n in sorted(temas.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n}")
+
+
+def render_question():
+    if not st.session_state.data:
+        st.warning("No hay casos disponibles para este modo.")
+        if st.button("Volver al menú", use_container_width=True):
+            reset_app()
+            st.rerun()
+        return
+
+    if st.session_state.i >= len(st.session_state.data):
+        st.session_state.mode = "final"
+        st.rerun()
+        return
+
+    q = st.session_state.data[st.session_state.i]
+    opts = build_option_map(q)
+
+    render_top_metrics()
+    st.write("")
+
+    st.subheader("Caso práctico")
+    st.caption(f"{q['materia']} · {q['tema']}")
+
+    with st.container(border=True):
+        st.markdown("**Situación práctica**")
+        st.write(q["situacion"])
+
+    st.write("")
+
+    with st.container(border=True):
+        st.markdown("**Pregunta**")
+        st.write(q["pregunta"])
+
+    st.write("")
+
+    if not st.session_state.feedback:
+        with st.form(key=f"form_{q['id']}"):
+            selected = st.radio(
+                "Selecciona la opción correcta:",
+                ["A", "B", "C", "D"],
+                format_func=lambda x: f"{x}. {opts[x]}"
+            )
+
+            c1, c2 = st.columns(2, gap="small")
+            send = c1.form_submit_button("Responder", use_container_width=True)
+            back = c2.form_submit_button("Volver al menú", use_container_width=True)
+
+        if back:
+            reset_app()
+            st.rerun()
+
+        if send:
+            st.session_state.sel = selected
+            st.session_state.feedback = True
+
+            is_correct = selected == q["respuesta_correcta"]
+            if is_correct:
+                st.session_state.score += 1
+            else:
+                store_error_question(q)
+
+            st.session_state.session_results.append(
+                {
+                    "id": q["id"],
+                    "tema": q["tema"],
+                    "correcta": is_correct,
+                }
+            )
+            st.rerun()
+
+    else:
+        selected = st.session_state.sel
+        correct = q["respuesta_correcta"]
+
+        if selected == correct:
+            st.success("Decisión adecuada")
+        else:
+            st.error("Decisión incorrecta")
+
+        with st.container(border=True):
+            st.write(f"**Tu respuesta:** {selected}. {opts[selected]}")
+            st.write(f"**Respuesta correcta:** {correct}. {opts[correct]}")
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Explicación legal")
+            if selected == correct:
+                st.write(normalize_feedback(q["feedback_correcto"]))
+            else:
+                st.write(normalize_feedback(q["feedback_error"]))
+
+            if q["referencia_legal"]:
+                st.write(f"**Referencia legal:** {q['referencia_legal']}")
+
+        st.write("")
+
+        c1, c2 = st.columns(2, gap="small")
+        if c1.button("Continuar", use_container_width=True, key=f"next_{q['id']}"):
+            st.session_state.i += 1
+            st.session_state.feedback = False
+            st.session_state.sel = None
+
+            if st.session_state.i >= len(st.session_state.data):
+                st.session_state.mode = "final"
+
+            st.rerun()
+
+        if c2.button("Volver al menú", use_container_width=True, key=f"menu_{q['id']}"):
+            reset_app()
+            st.rerun()
+
+
+def render_final():
+    total = len(st.session_state.data)
+    score = st.session_state.score
+    errors = total - score
+    pct = int((score / total) * 100) if total > 0 else 0
+
+    st.title("Resultado final")
+
+    c1, c2, c3 = st.columns(3, gap="small")
+    with c1:
+        st.metric("Aciertos", score, border=True)
+    with c2:
+        st.metric("Errores", errors, border=True)
+    with c3:
+        st.metric("Rendimiento", f"{pct}%", border=True)
+
+    st.write("")
+
+    with st.container(border=True):
+        st.subheader("Interpretación")
+        st.write(get_performance_message(pct))
+
+    st.write("")
+
+    fallados = {}
+    for r in st.session_state.session_results:
+        if not r["correcta"]:
+            tema = r["tema"]
+            fallados[tema] = fallados.get(tema, 0) + 1
+
+    with st.container(border=True):
+        st.subheader("Temas a reforzar")
+        if fallados:
+            for tema, n in sorted(fallados.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n} error(es)")
+        else:
+            st.write("No hubo errores en esta sesión.")
+
+    st.write("")
+
+    c1, c2 = st.columns(2, gap="small")
+    if c1.button("Repetir", use_container_width=True, key="btn_repeat"):
+        if st.session_state.mode == "repaso":
+            start_mode("repaso", QUESTIONS, None)
+        elif st.session_state.mode == "errores":
+            err = load_errors()
+            if len(err) > 0:
+                start_mode("errores", err, None)
+            else:
+                start_mode("simulacro", QUESTIONS, 20)
+        else:
+            start_mode("simulacro", QUESTIONS, 20)
+        st.rerun()
+
+    if c2.button("Volver al menú principal", use_container_width=True, key="btn_final_menu"):
+        reset_app()
+        st.rerun()
+
+
+# ------------------------------------------------------------
+# ROUTER
+# ------------------------------------------------------------
+if st.session_state.mode == "menu":
+    render_menu()
+elif st.session_state.mode == "final":
+    render_final()
+else:
+    render_question()
+def get_performance_message(pct):
+    if pct >= 90:
+        return "Nivel muy sólido. Tu criterio operativo es fuerte y consistente."
+    if pct >= 75:
+        return "Buen nivel. Hay base práctica clara, aunque conviene afinar algunos detalles."
+    if pct >= 60:
+        return "Nivel intermedio. Ya identificas buena parte de la lógica, pero todavía hay margen de mejora."
+    return "Conviene reforzar la base operativa antes de confiar en automatismos."
+
+
+def unique_by_id(items):
+    seen = set()
+    out = []
+    for item in items:
+        qid = str(item.get("id", ""))
+        if qid and qid not in seen:
+            seen.add(qid)
+            out.append(item)
+    return out
+
+
+def start_mode(mode_name, source_questions, n_questions=None):
+    if not isinstance(source_questions, list):
+        st.error("El banco de preguntas no tiene formato válido.")
+        st.stop()
+
+    data = unique_by_id(source_questions.copy())
+    random.shuffle(data)
+
+    if n_questions is not None:
+        data = data[: min(n_questions, len(data))]
+
+    st.session_state.mode = mode_name
+    st.session_state.data = data
+    st.session_state.i = 0
+    st.session_state.score = 0
+    st.session_state.feedback = False
+    st.session_state.sel = None
+    st.session_state.session_results = []
+
+
+def reset_app():
+    st.session_state.mode = "menu"
+    st.session_state.data = []
+    st.session_state.i = 0
+    st.session_state.score = 0
+    st.session_state.feedback = False
+    st.session_state.sel = None
+    st.session_state.session_results = []
+
+
+def store_error_question(q):
+    errors = load_errors()
+    if not any(str(x.get("id", "")) == str(q["id"]) for x in errors):
+        errors.append(q)
+        save_errors(errors)
+
+
+if "mode" not in st.session_state:
+    reset_app()
+
+# ------------------------------------------------------------
+# ESTILO
+# ------------------------------------------------------------
+st.markdown("""
+<style>
+.block-container {
+    max-width: 1120px;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+div[data-testid="stRadio"] label {
+    align-items: flex-start !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------------------
+# UI
+# ------------------------------------------------------------
+def render_top_metrics():
+    total = len(st.session_state.data)
+    current = st.session_state.i + 1 if total > 0 else 0
+
+    c1, c2, c3 = st.columns(3, gap="small")
+    with c1:
+        st.metric("Modalidad", st.session_state.mode.title(), border=True)
+    with c2:
+        st.metric("Progreso", f"{current}/{total}", border=True)
+    with c3:
+        st.metric("Aciertos", st.session_state.score, border=True)
+
+
+def render_menu():
+    st.title("Simulador de práctica laboral y Seguridad Social")
+    st.caption("Entrenamiento orientado a gestión operativa de personas, contratación, cotización, recaudación y control administrativo.")
+
+    left, right = st.columns(2, gap="large")
+
+    with left:
+        with st.container(border=True):
+            st.subheader("Modo simulacro")
+            st.write("Sesión mixta con casos aleatorios y evaluación final.")
+            if st.button("Empezar simulacro de 20 casos", use_container_width=True, key="btn_simulacro"):
+                start_mode("simulacro", QUESTIONS, 20)
+                st.rerun()
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Repaso guiado")
+            st.write("Práctica secuencial con feedback completo tras cada respuesta.")
+            if st.button("Empezar repaso guiado", use_container_width=True, key="btn_repaso"):
+                start_mode("repaso", QUESTIONS, None)
+                st.rerun()
+
+    with right:
+        errors = load_errors()
+
+        with st.container(border=True):
+            st.subheader("Repaso de errores")
+            st.write(f"Errores guardados: **{len(errors)}**")
+
+            if len(errors) > 0:
+                if st.button("Reestudiar errores", use_container_width=True, key="btn_errores"):
+                    start_mode("errores", errors, None)
+                    st.rerun()
+            else:
+                st.info("Todavía no hay errores guardados.")
+
+            if st.button("Vaciar errores guardados", use_container_width=True, key="btn_vaciar"):
+                save_errors([])
+                st.success("Errores eliminados.")
+                st.rerun()
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Banco disponible")
+            st.write(f"Casos cargados: **{len(QUESTIONS)}**")
+
+            temas = get_topic_counts(QUESTIONS)
+            for tema, n in sorted(temas.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n}")
+
+
+def render_question():
+    if not st.session_state.data:
+        st.warning("No hay casos disponibles para este modo.")
+        if st.button("Volver al menú", use_container_width=True):
+            reset_app()
+            st.rerun()
+        return
+
+    if st.session_state.i >= len(st.session_state.data):
+        st.session_state.mode = "final"
+        st.rerun()
+        return
+
+    q = st.session_state.data[st.session_state.i]
+    opts = build_option_map(q)
+
+    render_top_metrics()
+    st.write("")
+
+    st.subheader("Caso práctico")
+    st.caption(f"{q['materia']} · {q['tema']}")
+
+    with st.container(border=True):
+        st.markdown("**Situación práctica**")
+        st.write(q["situacion"])
+
+    st.write("")
+
+    with st.container(border=True):
+        st.markdown("**Pregunta**")
+        st.write(q["pregunta"])
+
+    st.write("")
+
+    if not st.session_state.feedback:
+        with st.form(key=f"form_{q['id']}"):
+            selected = st.radio(
+                "Selecciona la opción correcta:",
+                ["A", "B", "C", "D"],
+                format_func=lambda x: f"{x}. {opts[x]}"
+            )
+
+            c1, c2 = st.columns(2, gap="small")
+            send = c1.form_submit_button("Responder", use_container_width=True)
+            back = c2.form_submit_button("Volver al menú", use_container_width=True)
+
+        if back:
+            reset_app()
+            st.rerun()
+
+        if send:
+            st.session_state.sel = selected
+            st.session_state.feedback = True
+
+            is_correct = selected == q["respuesta_correcta"]
+            if is_correct:
+                st.session_state.score += 1
+            else:
+                store_error_question(q)
+
+            st.session_state.session_results.append(
+                {
+                    "id": q["id"],
+                    "tema": q["tema"],
+                    "correcta": is_correct,
+                }
+            )
+            st.rerun()
+
+    else:
+        selected = st.session_state.sel
+        correct = q["respuesta_correcta"]
+
+        if selected == correct:
+            st.success("Decisión adecuada")
+        else:
+            st.error("Decisión incorrecta")
+
+        with st.container(border=True):
+            st.write(f"**Tu respuesta:** {selected}. {opts[selected]}")
+            st.write(f"**Respuesta correcta:** {correct}. {opts[correct]}")
+
+        st.write("")
+
+        with st.container(border=True):
+            st.subheader("Explicación legal")
+            if selected == correct:
+                st.write(normalize_feedback(q["feedback_correcto"]))
+            else:
+                st.write(normalize_feedback(q["feedback_error"]))
+
+            if q["referencia_legal"]:
+                st.write(f"**Referencia legal:** {q['referencia_legal']}")
+
+        st.write("")
+
+        c1, c2 = st.columns(2, gap="small")
+        if c1.button("Continuar", use_container_width=True, key=f"next_{q['id']}"):
+            st.session_state.i += 1
+            st.session_state.feedback = False
+            st.session_state.sel = None
+
+            if st.session_state.i >= len(st.session_state.data):
+                st.session_state.mode = "final"
+
+            st.rerun()
+
+        if c2.button("Volver al menú", use_container_width=True, key=f"menu_{q['id']}"):
+            reset_app()
+            st.rerun()
+
+
+def render_final():
+    total = len(st.session_state.data)
+    score = st.session_state.score
+    errors = total - score
+    pct = int((score / total) * 100) if total > 0 else 0
+
+    st.title("Resultado final")
+
+    c1, c2, c3 = st.columns(3, gap="small")
+    with c1:
+        st.metric("Aciertos", score, border=True)
+    with c2:
+        st.metric("Errores", errors, border=True)
+    with c3:
+        st.metric("Rendimiento", f"{pct}%", border=True)
+
+    st.write("")
+
+    with st.container(border=True):
+        st.subheader("Interpretación")
+        st.write(get_performance_message(pct))
+
+    st.write("")
+
+    fallados = {}
+    for r in st.session_state.session_results:
+        if not r["correcta"]:
+            tema = r["tema"]
+            fallados[tema] = fallados.get(tema, 0) + 1
+
+    with st.container(border=True):
+        st.subheader("Temas a reforzar")
+        if fallados:
+            for tema, n in sorted(fallados.items(), key=lambda x: (-x[1], x[0])):
+                st.write(f"- {tema}: {n} error(es)")
+        else:
+            st.write("No hubo errores en esta sesión.")
+
+    st.write("")
+
+    c1, c2 = st.columns(2, gap="small")
+    if c1.button("Repetir", use_container_width=True, key="btn_repeat"):
+        if st.session_state.mode == "repaso":
+            start_mode("repaso", QUESTIONS, None)
+        elif st.session_state.mode == "errores":
+            err = load_errors()
+            if len(err) > 0:
+                start_mode("errores", err, None)
+            else:
+                start_mode("simulacro", QUESTIONS, 20)
+        else:
+            start_mode("simulacro", QUESTIONS, 20)
+        st.rerun()
+
+    if c2.button("Volver al menú principal", use_container_width=True, key="btn_final_menu"):
+        reset_app()
+        st.rerun()
+
+
+# ------------------------------------------------------------
+# ROUTER
+# ------------------------------------------------------------
+if st.session_state.mode == "menu":
+    render_menu()
+elif st.session_state.mode == "final":
+    render_final()
+else:
+    render_question()}
 ]
