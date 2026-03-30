@@ -6,13 +6,9 @@ import streamlit as st
 # ============================================================
 # SIMULADOR DE PRÁCTICA LABORAL Y SEGURIDAD SOCIAL
 # - mantiene el dashboard principal
-# - corrige el corte de cards al empezar el simulador
-# - sin normativa al inicio del caso
-# - tras responder solo muestra:
-#   1) Tu respuesta
-#   2) Respuesta correcta
-#   3) Explicación legal
-#   4) Referencia legal
+# - elimina cards recortadas en el flujo del simulador
+# - elimina la referencia legal de la explicación
+# - no muestra normativa al inicio del caso
 # ============================================================
 
 CANDIDATE_FILES = [
@@ -67,7 +63,6 @@ def load_questions():
         "respuesta_correcta",
         "feedback_correcto",
         "feedback_error",
-        "referencia_legal",
     }
 
     cleaned = []
@@ -91,7 +86,6 @@ def load_questions():
                 "respuesta_correcta": str(row["respuesta_correcta"]).strip().upper(),
                 "feedback_correcto": str(row["feedback_correcto"]),
                 "feedback_error": str(row["feedback_error"]),
-                "referencia_legal": str(row.get("referencia_legal", "")),
             }
         )
 
@@ -167,6 +161,7 @@ def get_performance_message(pct):
 def clean_feedback(text):
     text = str(text).strip()
     text = text.replace("Correcto.", "").replace("Incorrecto.", "").strip()
+    text = text.replace("Referencia legal:", "").strip()
     return text
 
 
@@ -324,23 +319,14 @@ def render_question():
     )
 
     st.write("")
-    st.markdown("### Caso práctico")
+    st.subheader("Caso práctico")
+    st.caption(f"{q['materia']} · {q['tema']}")
 
-    with st.container(border=True):
-        st.markdown(f"**Materia:** {q['materia']}")
-        st.markdown(f"**Tema:** {q['tema']}")
+    st.markdown("**Situación práctica**")
+    st.write(q["situacion"])
 
-    st.write("")
-
-    with st.container(border=True):
-        st.markdown("**Situación práctica**")
-        st.write(q["situacion"])
-
-    st.write("")
-
-    with st.container(border=True):
-        st.markdown("**Pregunta**")
-        st.write(q["pregunta"])
+    st.markdown("**Pregunta**")
+    st.write(q["pregunta"])
 
     st.write("")
 
@@ -389,21 +375,15 @@ def render_question():
         else:
             st.error("Decisión incorrecta")
 
-        with st.container(border=True):
-            st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
-            st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
+        st.write(f"**Tu respuesta:** {selected}. {option_map[selected]}")
+        st.write(f"**Respuesta correcta:** {correct}. {option_map[correct]}")
 
         st.write("")
-
-        with st.container(border=True):
-            st.subheader("Explicación legal")
-            if selected == correct:
-                st.write(clean_feedback(q["feedback_correcto"]))
-            else:
-                st.write(clean_feedback(q["feedback_error"]))
-
-            if q["referencia_legal"]:
-                st.write(f"**Referencia legal:** {q['referencia_legal']}")
+        st.subheader("Explicación legal")
+        if selected == correct:
+            st.write(clean_feedback(q["feedback_correcto"]))
+        else:
+            st.write(clean_feedback(q["feedback_error"]))
 
         st.write("")
 
