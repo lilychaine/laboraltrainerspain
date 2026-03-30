@@ -1,282 +1,230 @@
-[
-  {
-    "id": "1",
-    "materia": "Seguridad Social",
-    "tema": "Altas y afiliación",
-    "situacion": "Una persona comienza a trabajar el lunes a las 9:00. La empresa no ha comunicado el alta en Seguridad Social el viernes anterior.",
-    "pregunta": "¿Qué decisión deberías tomar?",
-    "opcion_a": "Comunicar el alta antes del inicio de la jornada laboral.",
-    "opcion_b": "Comunicar el alta dentro de los 3 días siguientes.",
-    "opcion_c": "Esperar al cierre de mes para regularizar.",
-    "opcion_d": "No es necesario comunicar el alta si hay contrato firmado.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "El alta debe comunicarse antes del inicio de la prestación de servicios.",
-    "feedback_error": "El error es no identificar la obligación previa de alta antes de comenzar a trabajar."
-  },
-  {
-    "id": "2",
-    "materia": "Seguridad Social",
-    "tema": "Altas y afiliación",
-    "situacion": "Una persona ya afiliada cambia de empresa y empieza una nueva relación laboral.",
-    "pregunta": "¿Qué debe hacer la empresa?",
-    "opcion_a": "Solicitar un nuevo número de afiliación.",
-    "opcion_b": "Comunicar un alta en Seguridad Social.",
-    "opcion_c": "No hacer ninguna gestión.",
-    "opcion_d": "Esperar a la primera nómina.",
-    "respuesta_correcta": "B",
-    "feedback_correcto": "Debe tramitarse el alta, no una nueva afiliación.",
-    "feedback_error": "El error es confundir afiliación con alta."
-  },
-  {
-    "id": "3",
-    "materia": "Seguridad Social",
-    "tema": "Bajas y variaciones",
-    "situacion": "Una persona finaliza su contrato el viernes.",
-    "pregunta": "¿Qué debe hacer la empresa respecto a Seguridad Social?",
-    "opcion_a": "Comunicar la baja en Seguridad Social.",
-    "opcion_b": "No comunicar nada.",
-    "opcion_c": "Esperar 10 días.",
-    "opcion_d": "Solo comunicarlo al trabajador.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "La empresa debe comunicar la baja cuando cesa la relación laboral.",
-    "feedback_error": "El error es no comunicar el fin de la relación laboral."
-  },
-  {
-    "id": "4",
-    "materia": "Seguridad Social",
-    "tema": "Bajas y variaciones",
-    "situacion": "Una persona pasa de jornada completa a jornada parcial.",
-    "pregunta": "¿Qué actuación corresponde?",
-    "opcion_a": "Comunicar una variación de datos.",
-    "opcion_b": "Dar de baja y alta nuevamente.",
-    "opcion_c": "No hacer nada.",
-    "opcion_d": "Esperar al siguiente contrato.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Los cambios de jornada se comunican como variación de datos.",
-    "feedback_error": "El error es tratar la modificación como baja y alta."
-  },
-  {
-    "id": "5",
-    "materia": "Seguridad Social",
-    "tema": "Cotización",
-    "situacion": "Una empresa duda si debe cotizar por una persona que está trabajando.",
-    "pregunta": "¿Cuál es la regla general?",
-    "opcion_a": "Siempre que exista prestación de servicios hay obligación de cotizar.",
-    "opcion_b": "Solo si el contrato es indefinido.",
-    "opcion_c": "Solo si lo solicita el trabajador.",
-    "opcion_d": "No es obligatorio en todos los casos.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "La obligación de cotizar nace con la prestación de servicios.",
-    "feedback_error": "El error es pensar que depende del tipo de contrato o voluntad."
-  },
-  {
-    "id": "6",
-    "materia": "Seguridad Social",
-    "tema": "Cotización",
-    "situacion": "La empresa detecta que ha cotizado de menos por un trabajador.",
-    "pregunta": "¿Qué debe hacer?",
-    "opcion_a": "Regularizar la situación ingresando las diferencias.",
-    "opcion_b": "No hacer nada.",
-    "opcion_c": "Esperar inspección.",
-    "opcion_d": "Comunicarlo al trabajador únicamente.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe regularizarse la cotización ingresando las diferencias.",
-    "feedback_error": "El error es no corregir la cotización incorrecta."
-  },
-  {
-    "id": "7",
-    "materia": "Seguridad Social",
-    "tema": "Recaudación",
-    "situacion": "Una empresa no ingresa las cuotas dentro del plazo establecido.",
-    "pregunta": "¿Qué consecuencia puede producirse?",
-    "opcion_a": "Aplicación de recargos.",
-    "opcion_b": "No ocurre nada.",
-    "opcion_c": "Se cancela la deuda automáticamente.",
-    "opcion_d": "Solo se informa al trabajador.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "El ingreso fuera de plazo genera recargos.",
-    "feedback_error": "El error es ignorar las consecuencias del retraso."
-  },
-  {
-    "id": "8",
-    "materia": "Laboral",
-    "tema": "Contrato de trabajo",
-    "situacion": "Una empresa va a contratar a una persona.",
-    "pregunta": "¿Qué debe hacer antes de que comience a trabajar?",
-    "opcion_a": "Formalizar el contrato y dar de alta en Seguridad Social.",
-    "opcion_b": "Solo firmar el contrato.",
-    "opcion_c": "Solo dar de alta.",
-    "opcion_d": "Esperar al primer día.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe formalizar el contrato y tramitar el alta antes del inicio.",
-    "feedback_error": "El error es no cumplir ambos requisitos previos."
-  },
-  {
-    "id": "9",
-    "materia": "Laboral",
-    "tema": "Periodo de prueba",
-    "situacion": "Una persona está en periodo de prueba.",
-    "pregunta": "¿Qué implica esta situación?",
-    "opcion_a": "Ambas partes pueden extinguir la relación sin causa.",
-    "opcion_b": "No puede extinguirse.",
-    "opcion_c": "Solo puede extinguir la empresa.",
-    "opcion_d": "Solo puede extinguir el trabajador.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Durante el periodo de prueba ambas partes pueden desistir.",
-    "feedback_error": "El error es limitar la facultad de extinción."
-  },
-  {
-    "id": "10",
-    "materia": "Laboral",
-    "tema": "Jornada",
-    "situacion": "Una empresa quiere modificar la jornada de un trabajador.",
-    "pregunta": "¿Qué debe hacer?",
-    "opcion_a": "Aplicar la modificación conforme a la normativa.",
-    "opcion_b": "Cambiarla sin comunicar.",
-    "opcion_c": "Ignorar la normativa.",
-    "opcion_d": "Decidir unilateralmente sin procedimiento.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Las modificaciones deben ajustarse a la normativa aplicable.",
-    "feedback_error": "El error es modificar condiciones sin procedimiento."
-  },
-  {
-    "id": "11",
-    "materia": "Seguridad Social",
-    "tema": "Altas",
-    "situacion": "Un trabajador empieza a trabajar sin estar dado de alta.",
-    "pregunta": "¿Qué situación se produce?",
-    "opcion_a": "Incumplimiento de la obligación de alta.",
-    "opcion_b": "Situación regular.",
-    "opcion_c": "No tiene consecuencias.",
-    "opcion_d": "Depende del contrato.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "La falta de alta es un incumplimiento.",
-    "feedback_error": "El error es considerar válida la situación."
-  },
-  {
-    "id": "12",
-    "materia": "Seguridad Social",
-    "tema": "Variaciones",
-    "situacion": "Se modifica el salario de un trabajador.",
-    "pregunta": "¿Qué debe hacer la empresa?",
-    "opcion_a": "Comunicar la variación.",
-    "opcion_b": "No comunicar nada.",
-    "opcion_c": "Esperar a final de año.",
-    "opcion_d": "Solo reflejarlo en nómina.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Las variaciones deben comunicarse.",
-    "feedback_error": "El error es no informar cambios relevantes."
-  },
-  {
-    "id": "13",
-    "materia": "Seguridad Social",
-    "tema": "Recaudación",
-    "situacion": "Una empresa tiene deuda con la Seguridad Social.",
-    "pregunta": "¿Qué puede suceder?",
-    "opcion_a": "Inicio de procedimiento recaudatorio.",
-    "opcion_b": "Nada.",
-    "opcion_c": "Se elimina la deuda.",
-    "opcion_d": "Se traslada al trabajador.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Las deudas generan actuaciones recaudatorias.",
-    "feedback_error": "El error es pensar que no tiene consecuencias."
-  },
-  {
-    "id": "14",
-    "materia": "Laboral",
-    "tema": "Extinción",
-    "situacion": "Finaliza un contrato temporal.",
-    "pregunta": "¿Qué debe hacer la empresa?",
-    "opcion_a": "Gestionar la extinción y comunicar la baja.",
-    "opcion_b": "No hacer nada.",
-    "opcion_c": "Mantener al trabajador sin contrato.",
-    "opcion_d": "Esperar.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe gestionarse correctamente la finalización.",
-    "feedback_error": "El error es no formalizar la extinción."
-  },
-  {
-    "id": "15",
-    "materia": "Seguridad Social",
-    "tema": "Cotización",
-    "situacion": "Una persona trabaja y no se cotiza por ella.",
-    "pregunta": "¿Qué implica?",
-    "opcion_a": "Incumplimiento de la obligación de cotizar.",
-    "opcion_b": "Situación válida.",
-    "opcion_c": "Opcional.",
-    "opcion_d": "Sin consecuencias.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe cotizarse por toda prestación de servicios.",
-    "feedback_error": "El error es ignorar la obligación."
-  },
-  {
-    "id": "16",
-    "materia": "Laboral",
-    "tema": "Contrato",
-    "situacion": "Una empresa contrata sin formalizar por escrito.",
-    "pregunta": "¿Qué problema existe?",
-    "opcion_a": "Falta de formalización adecuada.",
-    "opcion_b": "No hay problema.",
-    "opcion_c": "Es obligatorio siempre verbal.",
-    "opcion_d": "Depende del trabajador.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe formalizarse conforme a normativa.",
-    "feedback_error": "El error es no formalizar correctamente."
-  },
-  {
-    "id": "17",
-    "materia": "Seguridad Social",
-    "tema": "Altas",
-    "situacion": "La empresa comunica el alta después del inicio.",
-    "pregunta": "¿Qué implica?",
-    "opcion_a": "Incumplimiento de plazo.",
-    "opcion_b": "Situación correcta.",
-    "opcion_c": "No tiene importancia.",
-    "opcion_d": "Es válido siempre.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "El alta debe ser previa al inicio.",
-    "feedback_error": "El error es no respetar el plazo."
-  },
-  {
-    "id": "18",
-    "materia": "Seguridad Social",
-    "tema": "Recaudación",
-    "situacion": "Se paga fuera de plazo.",
-    "pregunta": "¿Qué sucede?",
-    "opcion_a": "Se generan recargos.",
-    "opcion_b": "Nada.",
-    "opcion_c": "Se elimina la deuda.",
-    "opcion_d": "No se paga.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "El retraso genera recargos.",
-    "feedback_error": "El error es ignorar consecuencias."
-  },
-  {
-    "id": "19",
-    "materia": "Laboral",
-    "tema": "Jornada",
-    "situacion": "Se modifica la jornada sin comunicar.",
-    "pregunta": "¿Qué problema hay?",
-    "opcion_a": "Incumplimiento de procedimiento.",
-    "opcion_b": "Ninguno.",
-    "opcion_c": "Es correcto.",
-    "opcion_d": "Depende.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe seguirse procedimiento.",
-    "feedback_error": "El error es actuar sin formalidad."
-  },
-  {
-    "id": "20",
-    "materia": "Seguridad Social",
-    "tema": "Variaciones",
-    "situacion": "Cambio en condiciones laborales.",
-    "pregunta": "¿Qué corresponde?",
-    "opcion_a": "Comunicar la variación.",
-    "opcion_b": "No hacer nada.",
-    "opcion_c": "Esperar.",
-    "opcion_d": "Solo registrar internamente.",
-    "respuesta_correcta": "A",
-    "feedback_correcto": "Debe comunicarse el cambio.",
-    "feedback_error": "El error es no informar."
-  }
-]
+import json
+import os
+import random
+import streamlit as st
+
+# ============================================================
+# CONFIG
+# ============================================================
+
+DATA_FILE = "simulador_base_final.json"
+ERRORS_FILE = "errores_simulador.json"
+
+st.set_page_config(
+    page_title="Simulador laboral",
+    layout="wide"
+)
+
+# ============================================================
+# CARGA DATOS
+# ============================================================
+
+def load_questions():
+    if not os.path.exists(DATA_FILE):
+        st.error("No se encontró el archivo de preguntas")
+        st.stop()
+
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    return data
+
+
+def load_errors():
+    if not os.path.exists(ERRORS_FILE):
+        return []
+    with open(ERRORS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_errors(errors):
+    with open(ERRORS_FILE, "w", encoding="utf-8") as f:
+        json.dump(errors, f, indent=2)
+
+
+questions = load_questions()
+
+# ============================================================
+# HELPERS
+# ============================================================
+
+def build_options(q):
+    return {
+        "A": q["opcion_a"],
+        "B": q["opcion_b"],
+        "C": q["opcion_c"],
+        "D": q["opcion_d"],
+    }
+
+
+def start_mode(mode, source, n=None):
+    data = source.copy()
+    random.shuffle(data)
+
+    if n:
+        data = data[:n]
+
+    st.session_state.mode = mode
+    st.session_state.data = data
+    st.session_state.i = 0
+    st.session_state.score = 0
+    st.session_state.feedback = False
+    st.session_state.sel = None
+
+
+def reset():
+    st.session_state.mode = "menu"
+    st.session_state.data = []
+    st.session_state.i = 0
+    st.session_state.score = 0
+    st.session_state.feedback = False
+    st.session_state.sel = None
+
+
+if "mode" not in st.session_state:
+    reset()
+
+# ============================================================
+# UI
+# ============================================================
+
+def metrics():
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Modalidad", st.session_state.mode)
+    c2.metric("Progreso", f"{st.session_state.i+1}/{len(st.session_state.data)}")
+    c3.metric("Aciertos", st.session_state.score)
+
+
+def menu():
+    st.title("Simulador de práctica laboral")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Simulacro (20 casos)", use_container_width=True):
+            start_mode("simulacro", questions, 20)
+            st.rerun()
+
+        if st.button("Repaso guiado", use_container_width=True):
+            start_mode("repaso", questions)
+            st.rerun()
+
+    with col2:
+        errors = load_errors()
+
+        if errors:
+            if st.button("Repasar errores", use_container_width=True):
+                start_mode("errores", errors)
+                st.rerun()
+
+        if st.button("Borrar errores", use_container_width=True):
+            save_errors([])
+            st.success("Errores eliminados")
+
+        st.write(f"Total casos: {len(questions)}")
+
+
+def question():
+    q = st.session_state.data[st.session_state.i]
+    opts = build_options(q)
+
+    metrics()
+
+    st.markdown("### Caso práctico")
+    st.caption(f"{q['materia']} · {q['tema']}")
+
+    st.markdown("**Situación práctica**")
+    st.write(q["situacion"])
+
+    st.markdown("**Pregunta**")
+    st.write(q["pregunta"])
+
+    if not st.session_state.feedback:
+
+        sel = st.radio(
+            "Selecciona:",
+            ["A", "B", "C", "D"],
+            format_func=lambda x: f"{x}. {opts[x]}"
+        )
+
+        if st.button("Responder"):
+            st.session_state.sel = sel
+            st.session_state.feedback = True
+
+            if sel == q["respuesta_correcta"]:
+                st.session_state.score += 1
+            else:
+                errors = load_errors()
+                if q not in errors:
+                    errors.append(q)
+                    save_errors(errors)
+
+            st.rerun()
+
+        if st.button("Volver al menú"):
+            reset()
+            st.rerun()
+
+    else:
+        sel = st.session_state.sel
+        correct = q["respuesta_correcta"]
+
+        if sel == correct:
+            st.success("Decisión adecuada")
+        else:
+            st.error("Decisión incorrecta")
+
+        st.write(f"**Tu respuesta:** {sel}. {opts[sel]}")
+        st.write(f"**Respuesta correcta:** {correct}. {opts[correct]}")
+
+        st.markdown("### Explicación")
+
+        if sel == correct:
+            st.write(q["feedback_correcto"])
+        else:
+            st.write(q["feedback_error"])
+
+        if st.button("Continuar"):
+            st.session_state.i += 1
+            st.session_state.feedback = False
+
+            if st.session_state.i >= len(st.session_state.data):
+                st.session_state.mode = "final"
+
+            st.rerun()
+
+        if st.button("Volver al menú"):
+            reset()
+            st.rerun()
+
+
+def final():
+    total = len(st.session_state.data)
+    score = st.session_state.score
+    pct = int(score / total * 100)
+
+    st.title("Resultado")
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Aciertos", score)
+    c2.metric("Errores", total - score)
+    c3.metric("Rendimiento", f"{pct}%")
+
+    if st.button("Repetir"):
+        start_mode("simulacro", questions, 20)
+        st.rerun()
+
+    if st.button("Menú"):
+        reset()
+        st.rerun()
+
+# ============================================================
+# ROUTER
+# ============================================================
+
+if st.session_state.mode == "menu":
+    menu()
+elif st.session_state.mode == "final":
+    final()
+else:
+    question()
